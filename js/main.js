@@ -1,18 +1,26 @@
 $(window).load(function(){
 
-//	Draw Initial State - only runs after data is loaded
+	//console.log(euData);
 
-console.log(euData);
+	//	Control variables
+	var selectedCountries = new Array();
 
-// Instantiate new objects with 'new'
 
-var bar_chart = new BarChart("gdp");
+	// Instantiate new objects with 'new'
 
-// Invoke methods like this
+	var bar_chart = new BarChart("gdp");
 
-//bar_chart.setAttribute("numJobs");
-console.log(bar_chart.getAttribute());
+	// Invoke methods like this
 
-bar_chart.draw(euData);
+	//bar_chart.setAttribute("numJobs");
+	//console.log(bar_chart.getAttribute());
+
+	selectedCountries.push("Portugal");
+	selectedCountries.push("Austria");
+
+	var mainSelectionData = filterMainByCountries(mainData, selectedCountries);
+	console.log(mainSelectionData);
+
+	bar_chart.draw(mainSelectionData);
 
 });
