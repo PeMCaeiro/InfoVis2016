@@ -1,5 +1,5 @@
 // Prototype Attribute Button
-function Attr_Button(attribute, gender){
+function AttrButton(attribute, gender){
 
    // Add object properties like this
    this.attribute = attribute;
