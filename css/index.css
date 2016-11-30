@@ -26,6 +26,16 @@ footer {
   border-color: #204d74;
 }
 
+/* Timeline */
+
+#timeline label {
+    position: absolute;
+    width: 20px;
+    margin-left: -10px;
+    text-align: center;
+    margin-top: 20px;
+}
+
 /* D3 */
 
 #bar_chart rect {

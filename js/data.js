@@ -1,3 +1,5 @@
+//      Data Loading, treatment and filter functions
+
 //  Global Variables
 
 var euData = new Array();
@@ -6,16 +8,14 @@ var mainData = new Array();
 
 //  Aux Data Selection Functions
 
-//Filters data by countries: returns only the data for chosen countries
+// Filters data by countries: returns only the data for chosen countries
 function filterMainByCountries(data, countries_array){
     var treated_data = new Array();
 
     for(var j = 0; j < countries_array.length; j++){
         for(var i=0; i<data.length; i++){
             if( data[i]["country"] == countries_array[j]){
-              //console.log(data[i]["room_name"])
               treated_data.push(data[i]);
-
             }
           }  
     }
@@ -24,7 +24,7 @@ function filterMainByCountries(data, countries_array){
     return treated_data;
 }
 
-//  Loads Data
+//  Loads Data after Document is ready
 
 $(document).ready(function() {
 

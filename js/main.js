@@ -1,3 +1,6 @@
+//		Main 
+
+//	Runs code after everything else finishes loading
 $(window).load(function(){
 
 	//console.log(euData);
@@ -16,7 +19,6 @@ $(window).load(function(){
 	//console.log(bar_chart.getAttribute());
 
 	selectedCountries.push("Portugal");
-	selectedCountries.push("Austria");
 
 	var mainSelectionData = filterMainByCountries(mainData, selectedCountries);
 	console.log(mainSelectionData);

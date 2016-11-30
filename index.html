@@ -17,9 +17,12 @@
     <!-- CSS -->
 
     <!-- Bootstrap Core CSS -->
-    <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="libs/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 
-     <!-- JQuery UI CSS -->
+    <!-- Bootstrap Select CSS -->
+    <link href="libs/bootstrap-select-1.12.1/css/bootstrap-select.min.css" rel="stylesheet">
+
+    <!-- JQuery UI CSS -->
     <link href="libs/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet">
 
     <!-- Theme CSS -->
@@ -48,36 +51,70 @@
 
     <!-- TODO: Way to hide some divs and show others - JS (?) -->
 
-    <div class="row" id="first">
+    <div class="row" id="first-row">
       <div class="col-sm-8"> 8 de 12
+
         <div id="choropleth_map">
           <!-- Map will be inserted with JS -->
         </div>
+
       </div>
       
       <div class="col-sm-4"> 4 de 12
-        <div id="SOMETHING">
-          <!-- SOMETHING will be inserted with JS -->
+        <div class="year" id="scatterplot">
+          <!-- scatterplot will be inserted with JS -->
         </div>
+
+        <div class="year-range" id="heatmap" style="display: none;">
+          <!-- heatmap will be inserted with JS -->
+        </div>
+
       </div>
     </div>
 
-    <div class="row" id="second">
+    <div class="row" id="second-row">
       <div class="col-sm-8"> 8 de 12
-        <div id="bar_chart">
+
+        <div class="year" id="bar_chart">
           <!-- bar chart will be inserted with JS -->
+        </div>
+
+        <div class="year-range" id="lines_chart" style="display: none;">
+          <!-- lines chart will be inserted with JS -->
         </div>
       </div>
 
       <div class="col-sm-4"> 4 de 12
-        <div id="radial_chart">
-          <!-- radial chart be inserted with JS -->
+
+        <div class="year" id="radial_chart">
+          <!-- radial chart will be inserted with JS -->
         </div>
+
+        <div class="year-range" id="overview" style="display: none;">
+          <!-- overview will be inserted with JS -->
+        </div>
+
       </div>
     </div>
 
-    <div class="row" id="timeline">
+    <div class="row" id="timeline-selection-row">
+      <div class="col-sm-2 col-sm-offset-5">
+
+        <select class="selectpicker" data-style="btn-primary" >
+          <option>2000</option>
+          <option>2001</option>
+          <option>2002</option>
+        </select>
+
+      </div>
+    </div>
+
+    <div class="row" id="timeline-row">
       <div class="col-sm-12">12 de 12
+
+        <div id="timeline">   
+          <!-- timeline will be inserted with JS -->
+        </div>
 
       </div>
     </div>
@@ -99,7 +136,10 @@
     <script src="libs/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap Select JavaScript -->
+    <script src="libs/bootstrap-select-1.12.1/js/bootstrap-select.min.js"></script>
 
     <!-- D3 -->
     <script src="libs/d3.min.js"></script>
