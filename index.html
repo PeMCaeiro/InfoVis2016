@@ -39,7 +39,7 @@
     <div class="row" id="attribute-buttons">
       <div class="col-sm-12 text-center">
         <div class="btn-group" id="selector">
-          <button class="btn btn-primary nohover" value="arrivals">Arrivals</a>
+          <button class="btn btn-primary nohover active" value="arrivals">Arrivals</a>
           <button class="btn btn-primary nohover" value="departures">Departures</a>
           <button class="btn btn-primary nohover" value="directToGdp">Contribution to GDP (USD)</button>
           <button class="btn btn-primary nohover" value="percentToGdp">Contribution to GDP (%)</button>
@@ -55,7 +55,42 @@
     <!-- TODO: Way to hide some divs and show others - JS (?) -->
 
     <div class="row" id="first-row">
-      <div class="col-sm-8"> 8 de 12
+
+      <div class="col-sm-2">
+
+        <select id="countries" class="selectpicker" data-width="fit" data-style="btn-primary" data-live-search="true" multiple data-max-options="4" title="Select countries...">
+          <option value="Austria">Austria</option>
+          <option value="Belgium">Belgium</option>
+          <option value="Bulgaria">Bulgaria</option>
+          <option value="Croatia">Croatia</option>
+          <option value="Cyprus">Cyprus</option>
+          <option value="Czech Republic">Czech Republic</option>
+          <option value="Denmark">Denmark</option>
+          <option value="Estonia">Estonia</option>
+          <option value="Finland">Finland</option>
+          <option value="France">France</option>
+          <option value="Germany">Germany</option>
+          <option value="Greece">Greece</option>
+          <option value="Hungary">Hungary</option>
+          <option value="Ireland">Ireland</option>
+          <option value="Italy">Italy</option>
+          <option value="Latvia">Latvia</option>
+          <option value="Lithuania">Lithuania</option>
+          <option value="Luxembourg">Luxembourg</option>
+          <option value="Malta">Malta</option>
+          <option value="Netherlands">Netherlands</option>
+          <option value="Poland">Poland</option>
+          <option value="Portugal">Portugal</option>
+          <option value="Romania">Romania</option>
+          <option value="Slovakia">Slovakia</option>
+          <option value="Spain">Spain</option>
+          <option value="Sweden">Sweden</option>
+          <option value="United Kingdom">United Kingdom</option>
+        </select>
+          
+      </div>
+
+      <div class="col-sm-6"> 6 de 12
 
         <div id="choropleth_map">
           <!-- Map will be inserted with JS -->
@@ -76,7 +111,7 @@
     </div>
 
     <div class="row" id="second-row">
-      <div class="col-sm-8"> 8 de 12
+      <div class="col-sm-8">
 
         <div class="year" id="bar_chart">
           <!-- bar chart will be inserted with JS -->
@@ -103,7 +138,7 @@
     <div class="row" id="timeline-selection-row">
       <div class="col-sm-2 col-sm-offset-5">
 
-        <select id="year-start" class="selectpicker" data-width="fit" data-style="btn-primary" >
+        <select id="year-start" class="selectpicker" data-width="fit" data-style="btn-primary" title="Start Year">
           <optgroup label = "Start Year">
           <option value="2000">2000</option>
           <option value="2001">2001</option>
@@ -124,7 +159,7 @@
           <option value="2016">2016</option>
         </select>
 
-        <select id="year-end" class="selectpicker pull-right" data-width="fit" data-style="btn-primary" >
+        <select id="year-end" class="selectpicker pull-right" data-width="fit" data-style="btn-primary" title="End Year">
           <optgroup label = "End Year">
           <option value="2000">2000</option>
           <option value="2001">2001</option>
@@ -192,13 +227,15 @@
 
     <!-- Our JS goes here - ORDER IS IMPORTANT -->
     
-    <script src="js/bar-chart.js"></script>
-
     <script src="js/data.js"></script>
+
+    <script src="js/timeline.js"></script>
 
     <script src="js/attribute-buttons.js"></script>
 
-    <script src="js/timeline.js"></script>
+    <script src="js/countries.js"></script>
+
+    <script src="js/bar-chart.js"></script>
 
     <script src="js/main.js"></script>
 

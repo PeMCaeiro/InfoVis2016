@@ -24,6 +24,30 @@ function filterMainByCountries(data, countries_array){
     return treated_data;
 }
 
+// Filters data by year range: returns only the data between chosen years
+function filterByYearRange(data, initial_year, end_year){
+    var treated_data = new Array();
+
+    var years = new Array();
+
+    for(var k = initial_year; k <= end_year; k++){
+        years.push(k);
+    }
+
+    //console.log(years);
+
+    for(var j = 0; j < years.length; j++){
+        for(var i=0; i<data.length; i++){
+            if( data[i]["year"] == years[j]){
+              treated_data.push(data[i]);
+            }
+          }  
+    }
+
+    //console.log(treated_data);
+    return treated_data;
+}
+
 //  Loads Data after Document is ready
 
 $(document).ready(function() {

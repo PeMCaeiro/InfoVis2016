@@ -4,6 +4,9 @@
 
 var first_year = 2014;
 var second_year = 2014;
+var year_range = false;
+
+// Control Variables
 var changeMadeInSelection = false;
 var changeMadeInSlider = false;
 
@@ -39,11 +42,13 @@ $(document).ready(function() {
 
                 //if years are the same -> change to "year" mode
                 if(second_year == first_year){
-
+                    year_range = false;
+                    update_graphs(year_range);
                 }
                 //if years are NOT the same -> change to "year-range" mode
                 else{
-
+                    year_range = true;
+                    update_graphs(year_range);
                 }
 
                 changeMadeInSlider = false;
@@ -81,6 +86,17 @@ $( "#year-start" ).change(function() {
             values: [first_year, second_year]
         });
 
+        //if years are the same -> change to "year" mode
+        if(second_year == first_year){
+            year_range = false;
+            update_graphs(year_range);
+        }
+        //if years are NOT the same -> change to "year-range" mode
+        else{
+            year_range = true;
+            update_graphs(year_range);
+        }
+
         //console.log("AFTER fy: " + first_year);
         changeMadeInSelection = false;
     }
@@ -97,6 +113,18 @@ $( "#year-end" ).change(function() {
         $("#timeline").slider({
             values: [first_year, second_year]
         });
+
+        //if years are the same -> change to "year" mode
+        if(second_year == first_year){
+            year_range = false;
+            update_graphs(year_range);
+        }
+        //if years are NOT the same -> change to "year-range" mode
+        else{
+            year_range = true;
+            update_graphs(year_range);
+        }
+
         changeMadeInSelection = false;
     }
 
