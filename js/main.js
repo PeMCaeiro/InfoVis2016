@@ -1,6 +1,8 @@
 //		Main 
 
 //	Aux Functions
+
+// Draw functions
 function draw_year_graphs(){
 
 	// Instantiate new objects with 'new'
@@ -25,18 +27,44 @@ function draw_year_graphs(){
 
 function delete_year_graphs(){
 	$("#bar_chart svg").remove();
+	$("#scatterplot svg").remove();
+	$("#radial_chart svg").remove();
+	$("#bar_chart svg").remove();
 }
+
+// Hide & Show Divs functions
+function hide_year_graphs(){
+	$(".year").hide();
+}
+
+function show_year_graphs(){
+	$(".year").show();
+}
+
+function hide_range_graphs(){
+	$(".year-range").hide();
+}
+
+function show_range_graphs(){
+	$(".year-range").show();
+}
+
+// Update function
 
 function update_graphs(range){
 	if(range == true){
-		//delete_year_graphs();			SHOULD BE HIDE_YEAR_GRAPHS
+		//delete_range_graphs();
+		//draw_range_graphs();
+		hide_year_graphs();
+		show_range_graphs();
 	}
 	else{
+		hide_range_graphs();
+		show_year_graphs();
 		delete_year_graphs();
 		draw_year_graphs();
 	}
 }
-
 
 //	MAIN Code
 

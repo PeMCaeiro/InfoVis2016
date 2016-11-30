@@ -8,6 +8,49 @@ var mainData = new Array();
 
 //  Aux Data Selection Functions
 
+// Remove sentinel entries from data
+function removeMainDataObjSentinel(data_object){
+
+    //console.log("Before: ");
+    //console.log(data_object);
+
+    if(data_object["arrivals"] < 0){
+        delete data_object["arrivals"];
+    }
+    if(data_object["departures"] < 0){
+        delete data_object["departures"];
+    }
+    if(data_object["directToGdp"] < 0){
+        delete data_object["directToGdp"];
+    }
+    if(data_object["numJobs"] < 0){
+        delete data_object["numJobs"];
+    }
+    if(data_object["expenditures"] < 0){
+        delete data_object["expenditures"];
+    }
+    if(data_object["gdp"] < 0){
+        delete data_object["gdp"];
+    }
+    if(data_object["netOccupancyRate"] < 0){
+        delete data_object["netOccupancyRate"];
+    }
+    if(data_object["percentToGdp"] < 0){
+        delete data_object["percentToGdp"];
+    }
+    if(data_object["population"] < 0){
+        delete data_object["population"];
+    }
+    if(data_object["receipts"] < 0){
+        delete data_object["receipts"];
+    }
+
+    //console.log("After: ");
+    //console.log(data_object);
+
+    return data_object;
+}
+
 // Filters data by countries: returns only the data for chosen countries
 function filterMainByCountries(data, countries_array){
     var treated_data = new Array();
@@ -87,6 +130,8 @@ $(document).ready(function() {
             mainData[i]["population"] = data[i]["population"];
             mainData[i]["year"] = data[i]["year"];
             mainData[i]["receipts"] = data[i]["receiptsDollars"];
+
+            mainData[i] = removeMainDataObjSentinel(mainData[i]);
 
         }
         //console.log(mainData);
