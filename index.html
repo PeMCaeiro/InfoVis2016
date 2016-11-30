@@ -19,6 +19,9 @@
     <!-- Bootstrap Core CSS -->
     <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+     <!-- JQuery UI CSS -->
+    <link href="libs/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet">
+
     <!-- Theme CSS -->
     <link href="css/index.css" rel="stylesheet">
 
@@ -28,8 +31,18 @@
   <body>
 
     <div class="row" id="attribute-buttons">
-      <div class="col-sm-12">12 de 12
-
+      <div class="col-sm-12 text-center">
+        <div class="btn-group" id="selector">
+          <button class="btn btn-primary nohover" value="arrivals">Arrivals</a>
+          <button class="btn btn-primary nohover" value="departures">Departures</a>
+          <button class="btn btn-primary nohover" value="directToGdp">Contribution to GDP (USD)</button>
+          <button class="btn btn-primary nohover" value="percentToGdp">Contribution to GDP (%)</button>
+          <button class="btn btn-primary nohover" value="expenditures">Expenditures (USD)</button>
+          <button class="btn btn-primary nohover" value="gdp">GDP (USD)</button>
+          <button class="btn btn-primary nohover" value="netOccupancyRate">Net Occupancy Rate (%)</button>
+          <button class="btn btn-primary nohover" value="numJobs">Jobs in Tourism</button>
+          <button class="btn btn-primary nohover" value="receipts">Receipts (USD)</button>
+        </div>
       </div>
     </div>
 
@@ -82,6 +95,9 @@
     <!-- jQuery -->
     <script src="libs/jquery/jquery.js"></script>
 
+    <!-- jQuery UI -->
+    <script src="libs/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+
     <!-- Bootstrap Core JavaScript -->
     <script src="libs/bootstrap/js/bootstrap.min.js"></script>
 
@@ -96,6 +112,8 @@
     <script src="js/bar-chart.js"></script>
 
     <script src="js/data.js"></script>
+
+    <script src="js/attribute-buttons.js"></script>
 
     <script src="js/main.js"></script>
 

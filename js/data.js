@@ -54,7 +54,7 @@ $(document).ready(function() {
             mainData[i]["arrivals"] = data[i]["arrivalsWW"];
             mainData[i]["country"] = data[i]["country"];
             mainData[i]["departures"] = data[i]["departuresWW"];
-            mainData[i]["directToGDP"] = data[i]["directContributionToGdpDollars"];
+            mainData[i]["directToGdp"] = data[i]["directContributionToGdpDollars"];
             mainData[i]["numJobs"] = data[i]["employmentNumberJobs"];
             mainData[i]["expenditures"] = data[i]["expendituresDollars"];
             mainData[i]["gdp"] = data[i]["gdp"];
@@ -77,7 +77,7 @@ $(document).ready(function() {
             euData[i]["arrivals"] = data[i]["arrivalsWW"];
             euData[i]["country"] = data[i]["country"];
             euData[i]["departures"] = data[i]["departuresWW"];
-            euData[i]["directToGDP"] = data[i]["directContributionToGdpDollars"];
+            euData[i]["directToGdp"] = data[i]["directContributionToGdpDollars"];
             euData[i]["numJobs"] = data[i]["employmentNumberJobs"];
             euData[i]["expenditures"] = data[i]["expendituresDollars"];
             euData[i]["gdp"] = data[i]["gdp"];
