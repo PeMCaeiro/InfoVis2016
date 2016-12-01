@@ -1,20 +1,75 @@
 //  Prototype BarChart
 
-function BarChart(attribute){
+function BarChart(){
 
    // Add object properties like this
-   this.attribute = attribute;
+   this.recent_attr = new Array();
    this.countries = new Array();
+   this.maxAttr = 1;
+   this.drawAttr = new Array();
 }
 
-// Attribute Setter
-BarChart.prototype.setAttribute = function(new_attr){
-    this.attribute = new_attr;
+
+//  Aux Functions
+
+BarChart.prototype.addRecentAttr = function (attr){
+
+    if(this.recent_attr.length < this.maxAttr){
+        this.recent_attr.push(attr);
+    }
+    // if the recent_attr array is "full", remove first ele and add this new ele at end
+    else{
+        this.recent_attr.shift();
+        this.recent_attr.push(attr);
+    }
+
+    console.log("Dropped recent attr: " + attr);
+    console.log(this.recent_attr);
+
 };
 
-// Attribute Getter
-BarChart.prototype.getAttribute = function(){
-    return this.attribute;
+BarChart.prototype.removeRecentAttr = function(attr){
+    var index = this.recent_attr.indexOf(attr);
+    this.recent_attr.splice(index, 1);
+    
+    console.log("Removed recent attr :" + attr);
+    console.log(this.recent_attr);
+};
+
+BarChart.prototype.isRecentAttrFull = function(){
+    if(this.recent_attr.length < this.maxAttr){
+        return false;
+    }
+    else{
+        return true;
+    }
+};
+
+// Graphs prioritize global attr and then dropped attrs
+BarChart.prototype.computeDrawAttr = function(globalAttributes){
+
+    this.drawAttr = new Array();
+    console.log("drawAttr length");
+    console.log(this.drawAttr.length);
+
+    for(var i=0; i < globalAttributes.length; i++ ){
+
+        if( this.drawAttr.length < this.maxAttr ){
+            this.drawAttr.push(globalAttributes[i]);
+        }
+
+    }
+
+    for(var j=0; j < this.recent_attr.length; j++ ){
+        
+        if( this.drawAttr.length < this.maxAttr ){
+            this.drawAttr.push(this.recent_attr[j]);
+        }
+    }
+
+    console.log("Drawable Attributes: ");
+    console.log(this.drawAttr);
+
 };
 
 
@@ -38,7 +93,11 @@ BarChart.prototype.draw = function(data){
     height = svg.attr("height") - margin.top - margin.bottom;
 
     //Get attribute to use for bars from object
-    var attr = this.attribute;
+    if(this.drawAttr.length > 0){
+        var attr = this.drawAttr[0];
+    }else{
+        return;
+    }
 
     //set the Ranges
     var x = d3.scaleBand().range([0, width]).padding(0.1);

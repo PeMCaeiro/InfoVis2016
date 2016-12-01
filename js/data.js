@@ -6,7 +6,7 @@ var euData = new Array();
 var originsData = new Array();
 var mainData = new Array();
 
-//  Aux Data Selection Functions
+//  Aux Data Selection/Filter Functions
 
 // Remove sentinel entries from data
 function removeMainDataObjSentinel(data_object){

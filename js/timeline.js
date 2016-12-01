@@ -4,6 +4,7 @@
 
 var first_year = 2014;
 var second_year = 2014;
+//Control boolean to change mode
 var year_range = false;
 
 // Control Variables
