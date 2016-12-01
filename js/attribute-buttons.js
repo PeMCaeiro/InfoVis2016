@@ -69,9 +69,16 @@ $('#selector button').click(function() {
 
 //	Make divs with graphs droppable
 
-// Bar Chart
+//Year Mode
+//	Bar Chart
 $('#bar_chart').droppable( {
     drop: handleDropBarEvent
+} );
+
+//Range Mode
+//	Line Chart
+$('#line_chart').droppable( {
+    drop: handleDropLineEvent
 } );
 
 //	Handlers from drop events
@@ -81,6 +88,15 @@ function handleDropBarEvent( event, ui ) {
 	var draggable = ui.draggable;
 	console.log( 'The attr button with value "' + draggable.attr('value') + '" was dropped onto Bar Chart!' );
 	bar_chart.addRecentAttr(draggable.attr('value'));
+
+	update_graphs(year_range);
+}
+
+//Line Chart
+function handleDropLineEvent( event, ui ) {
+	var draggable = ui.draggable;
+	console.log( 'The attr button with value "' + draggable.attr('value') + '" was dropped onto Line Chart!' );
+	line_chart.addRecentAttr(draggable.attr('value'));
 
 	update_graphs(year_range);
 }

@@ -100,6 +100,7 @@ $(document).ready(function() {
     d3.json("data/originsDestinations.json", function(data) {
         //console.log(data);  
         //  Get input data and load it into memory
+        var date = new Date();
         for(var i=0;i<data.length;i++){
             originsData[i] = new Object();
 
@@ -107,6 +108,9 @@ $(document).ready(function() {
             originsData[i]["destination"] = data[i]["destination"];
             originsData[i]["numTrips"] = data[i]["numberTrips"];
             originsData[i]["year"] = data[i]["year"];
+            date = new Date(data[i]["year"], 0 ,1);
+            originsData[i]["date"] = date;
+            //console.log(date);
 
         }
         //console.log(originsData);
@@ -115,6 +119,11 @@ $(document).ready(function() {
     d3.json("data/mainTable.json", function(data) {
         //console.log(data);  
         //  Get input data and load it into memory
+        var parseTime = d3.timeParse("%Y");
+        var date_string = "";
+        var parsed_date = "";
+        var date = new Date();
+
         for(var i=0;i<data.length;i++){
             mainData[i] = new Object();
 
@@ -128,8 +137,16 @@ $(document).ready(function() {
             mainData[i]["netOccupancyRate"] = data[i]["netOccupancyRate"];
             mainData[i]["percentToGdp"] = data[i]["percentageContributionGdp"];
             mainData[i]["population"] = data[i]["population"];
-            mainData[i]["year"] = data[i]["year"];
             mainData[i]["receipts"] = data[i]["receiptsDollars"];
+            mainData[i]["year"] = data[i]["year"];
+
+            date = new Date(data[i]["year"], 0 ,1);
+            date_string = date.getFullYear(); // fullYear
+            //console.log(date);
+            parsed_date = parseTime(date_string);
+            //console.log("PARSED: " + parsed_date);
+            mainData[i]["date"] = parsed_date;
+            
 
             mainData[i] = removeMainDataObjSentinel(mainData[i]);
 
@@ -140,6 +157,7 @@ $(document).ready(function() {
     d3.json("data/eu.json", function(data) {
         //console.log(data);  
         //  Get input data and load it into memory
+        var date = new Date();
         for(var i=0;i<data.length;i++){
             euData[i] = new Object();
 
@@ -154,6 +172,9 @@ $(document).ready(function() {
             euData[i]["population"] = data[i]["population"];
             euData[i]["year"] = data[i]["year"];
             euData[i]["receipts"] = data[i]["receiptsDollars"];
+            date = new Date(data[i]["year"], 0 ,1);
+            euData[i]["date"] = date;
+            //console.log(date);
 
         }
         //console.log(euData);
