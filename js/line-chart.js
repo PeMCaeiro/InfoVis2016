@@ -214,40 +214,12 @@ LineChart.prototype.draw = function(data, countries){
         svg.append("path")
           .data([filteredData])
           .attr("class", "line")
+          .attr("data-legend", function(d) { return d.country})
           .style("stroke", this.colors[i])
           .style("stroke-width", "2px")
           .style("fill", "none")
           .attr("d", this.valuelines[i]);
 
-        //Add legends
-
-        //Adjust text vertically
-        // if(i < 3){
-        //     svg.append("text")
-        //         .attr("x", width + horizontalAdjust)
-        //         .attr("y", verticalAdjust - (margin.top / 2))
-        //         .attr("text-anchor", "middle")
-        //         .style("text-decoration", "bold")
-        //         .style("fill", this.colors[i])
-        //         .text(this.countries[i]);
-
-        //     horizontalAdjust = horizontalAdjust + horizontalInc;
-        // }
-
-        // verticalAdjust = verticalAdjust + verticalInc;
-        // horizontalAdjust = 0;
-
-        // if(i >= 3){
-        //     svg.append("text")
-        //         .attr("x", width + horizontalAdjust)
-        //         .attr("y", verticalAdjust - (margin.top / 2))
-        //         .attr("text-anchor", "middle")
-        //         .style("text-decoration", "bold")
-        //         .style("fill", this.colors[i])
-        //         .text(this.countries[i]);
-
-        //     horizontalAdjust = horizontalAdjust + horizontalInc;
-        // }
     }
 
     // Draw the X Axis
@@ -257,9 +229,29 @@ LineChart.prototype.draw = function(data, countries){
 
     // Draw the Y Axis
     svg.append("g")
-        .call(yAxis);
+        .call(yAxis); 
 
-    // Append legend
-    
+
+    //Add legend - needs timeout
+    var colors_array = this.colors;
+    setTimeout(function(){
+
+        var ordinal = d3.scaleOrdinal()
+            .domain(countries)
+            .range(colors_array);
+
+        svg.append("g")
+            .attr("class", "legendOrdinal")
+            .attr("transform", "translate(600,0)");
+
+        var legendOrdinal = d3.legendColor()
+            .shape("path", d3.symbol().type(d3.symbolTriangle).size(150)())
+            .shapePadding(10)
+            .scale(ordinal);
+
+        svg.select(".legendOrdinal")
+            .call(legendOrdinal);  
+
+    }, 100); //  200 ms
 
 };
