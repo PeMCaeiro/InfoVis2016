@@ -15,34 +15,34 @@ function removeMainDataObjSentinel(data_object){
     //console.log(data_object);
 
     if(data_object["arrivals"] < 0){
-        delete data_object["arrivals"];
+        data_object["arrivals"] = 0;
     }
     if(data_object["departures"] < 0){
-        delete data_object["departures"];
+        data_object["departures"] = 0;
     }
     if(data_object["directToGdp"] < 0){
-        delete data_object["directToGdp"];
+        data_object["directToGdp"] = 0;
     }
     if(data_object["numJobs"] < 0){
-        delete data_object["numJobs"];
+        data_object["numJobs"] = 0;
     }
     if(data_object["expenditures"] < 0){
-        delete data_object["expenditures"];
+        data_object["expenditures"] = 0;
     }
     if(data_object["gdp"] < 0){
-        delete data_object["gdp"];
+        data_object["gdp"] = 0;
     }
     if(data_object["netOccupancyRate"] < 0){
-        delete data_object["netOccupancyRate"];
+        data_object["netOccupancyRate"] = 0;
     }
     if(data_object["percentToGdp"] < 0){
-        delete data_object["percentToGdp"];
+        data_object["percentToGdp"] = 0;
     }
     if(data_object["population"] < 0){
-        delete data_object["population"];
+        data_object["population"] = 0;
     }
     if(data_object["receipts"] < 0){
-        delete data_object["receipts"];
+        data_object["receipts"] = 0;
     }
 
     //console.log("After: ");

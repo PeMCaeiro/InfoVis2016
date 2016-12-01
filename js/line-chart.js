@@ -164,6 +164,16 @@ LineChart.prototype.draw = function(data, countries){
         .append("g")
         .attr("transform","translate(" + margin.left + "," + margin.top + ")");
 
+    // Setup the tool tip.  Note that this is just one example, and that many styling options are available.
+    // See original documentation for more details on styling: http://labratrevenge.com/d3-tip/
+    var tool_tip = d3.tip()
+        .attr("class", "d3-tip")
+        .offset([-8, 0])
+        .html(function(d) { return "Country: " + d.country + "</br>" + "</br>" +  "Value: " + d[attr] ; });
+        //.html(function(d) { return "Points: " + d.upoints ; });
+            
+    d3.select("svg").call(tool_tip);
+
     // Scale the range of the data
     //console.log("MIN, MAX: " + d3.extent(data, function(d) { return d[attr]; }) );
     //console.log("MAX: " + d3.max(data, function(d) { return d[attr]; }) );
@@ -196,6 +206,7 @@ LineChart.prototype.draw = function(data, countries){
     var verticalInc = 20;
 
     // Draw Lines
+    var pathContainer = null;
     for(var i=0; i < countries.length; i++){
         country = countries[i];
 
@@ -210,17 +221,30 @@ LineChart.prototype.draw = function(data, countries){
         //console.log("Filtered for Valueline:");
         //console.log(filteredData);
 
-        // Add the valueline path
+        //Add the valueline path
         svg.append("path")
-          .data([filteredData])
-          .attr("class", "line")
-          .attr("data-legend", function(d) { return d.country})
-          .style("stroke", this.colors[i])
-          .style("stroke-width", "2px")
-          .style("fill", "none")
-          .attr("d", this.valuelines[i]);
-
+            .data([filteredData])
+            .attr("class", "line")
+            .attr("data-legend", function(d) { return d.country})
+            .style("stroke", this.colors[i])
+            .style("stroke-width", "2px")
+            .style("fill", "none")
+            .attr("d", this.valuelines[i]);
     }
+
+     svg.selectAll(".circle")
+        .data(data)
+        .enter()
+        .append("svg:circle")
+        .attr("class", "circle")
+        .style("stroke", "black")
+        .style("stroke-width", "2px")
+        .style("fill", "white")
+        .attr("cx", function (d) { return x(d.date); })
+        .attr("cy", function (d) { return y(d[attr]); })
+        .attr("r", 4)
+        .on('mouseover', tool_tip.show)
+        .on('mouseout', tool_tip.hide);
 
     // Draw the X Axis
     svg.append("g")
