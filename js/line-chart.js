@@ -202,7 +202,7 @@ LineChart.prototype.draw = function(data, countries){
     var tool_tip = d3.tip()
         .attr("class", "d3-tip")
         .offset([-8, 0])
-        .html(function(d) { return "Country: " + d.country + "</br>" + "</br>" + "Year: " + d.year + "</br>" + "</br>" +  "Value: " + d[attr] ; });
+        .html(function(d) { return "Country: " + d.country + "</br>" + "</br>" + "Attribute: " + attr + "</br>" + "</br>" +  "Year: " + d.year + "</br>" + "</br>" +  "Value: " + d[attr] ; });
         //.html(function(d) { return "Points: " + d.upoints ; });
             
     d3.select("svg").call(tool_tip);
