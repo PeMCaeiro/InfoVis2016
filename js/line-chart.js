@@ -148,6 +148,39 @@ LineChart.prototype.draw = function(data, countries){
     if(this.drawAttr.length > 0){
         var attr = this.drawAttr[0];
     }else{
+        // selects the svg object of the specified div in the body of the page
+    // appends a 'group' element to 'svg'
+    // moves the 'group' element to the top left margin
+    svg = d3.select("#line_chart").select("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+        //set the Ranges
+        var x = d3.scaleTime().range([0, width]);
+        var y = d3.scaleLinear().range([height, 0]);
+ var min_date = d3.min(data, function(d) { return d["date"]; });
+    var max_date =  d3.max(data, function(d) { return d["date"]; });
+        x.domain( [min_date, max_date] );
+    var max_attr = this.maxDrawAttr(data);
+    y.domain( [0, 0 ] );
+
+        // Axis vars
+    var xAxis = d3.axisBottom(x)
+        .tickFormat(d3.timeFormat("%Y"))
+        .ticks(numberTicks); //Axis date format;
+
+    var yAxis = d3.axisLeft(y);
+
+        // Draw the X Axis
+        svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+        // Draw the Y Axis
+        svg.append("g")
+            .call(yAxis); 
+
         return;
     }
 
