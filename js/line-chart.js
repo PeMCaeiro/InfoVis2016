@@ -266,7 +266,7 @@ LineChart.prototype.draw = function(data, countries){
 
         svg.append("g")
             .attr("class", "legendOrdinal")
-            .attr("transform", "translate(600,0)");
+            .attr("transform", "translate(400,0)");
 
         var legendOrdinal = d3.legendColor()
             .shape("path", d3.symbol().type(d3.symbolTriangle).size(150)())
@@ -276,6 +276,6 @@ LineChart.prototype.draw = function(data, countries){
         svg.select(".legendOrdinal")
             .call(legendOrdinal);  
 
-    }, 100); //  200 ms
+    }, 200); //  200 ms
 
 };

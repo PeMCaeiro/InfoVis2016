@@ -127,6 +127,16 @@ BarChart.prototype.draw = function(data){
     width = svg.attr("width") - margin.left - margin.right,
     height = svg.attr("height") - margin.top - margin.bottom;
 
+    // Setup the tool tip.  Note that this is just one example, and that many styling options are available.
+    // See original documentation for more details on styling: http://labratrevenge.com/d3-tip/
+    var tool_tip = d3.tip()
+        .attr("class", "d3-tip")
+        .offset([-8, 0])
+        .html(function(d) { return "Attribute: " + d.name + "</br>" + "</br>" +  "Value: " + d.value ; });
+        //.html(function(d) { return "Points: " + d.upoints ; });
+            
+    d3.select("svg").call(tool_tip);
+
     //set the Ranges
     var x0 = d3.scaleBand().range([0, width]).padding(0.1);
     var x1 = d3.scaleBand();
@@ -177,16 +187,9 @@ BarChart.prototype.draw = function(data){
         .attr("x", function(d) { return x1(d.name); })
         .attr("y", function(d) { return y(d.value); })
         .attr("height", function(d) { return height - y(d.value); })
-        .style("fill", function(d) { return color(d.name); });
-          
-    // var bar = svg.selectAll("g")
-    //     .data(data)
-    //     .enter()
-    //     .append("rect")
-    //     .attr("x", function(d) { return x(d.year); } )
-    //     .attr("y", function(d) { return y(d[attr]); } )
-    //     .attr("height", function(d) { return height - y(d[attr]); })
-    //     .attr("width", x.bandwidth());
+        .style("fill", function(d) { return color(d.name); })
+        .on('mouseover', tool_tip.show)
+        .on('mouseout', tool_tip.hide);
 
     // Add the X Axis
     svg.append("g")
