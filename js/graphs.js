@@ -25,7 +25,7 @@ function draw_year_graphs(){
 	console.log(mainSelectionData);
 
 	bar_chart.computeDrawAttr(selectedGlobalAttr);
-	bar_chart.draw(mainSelectionData);
+	bar_chart.draw(mainSelectionData, selectedCountries);
 
 }
 

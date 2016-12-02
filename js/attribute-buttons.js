@@ -44,6 +44,9 @@ $('#selector button').draggable({cancel:false, revert:true});
 // Chose what to do when LClicked
 $('#selector button').click(function() {
 
+	console.log("Clicked global button");
+    console.log(selectedGlobalAttr);
+
 	if ( $( this ).hasClass( "active" ) ) {
 
  		$(this).removeClass("active");
@@ -60,9 +63,6 @@ $('#selector button').click(function() {
     	}
 
     }
-
-    console.log("Clicked global button");
-    console.log(selectedGlobalAttr);
 
     // TODO: insert whatever you want to do with $(this) here
 });

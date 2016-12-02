@@ -5,12 +5,47 @@ function BarChart(){
    // Add object properties like this
    this.recent_attr = new Array();
    this.countries = new Array();
-   this.maxAttr = 1;
+   this.maxAttr = 3;
    this.drawAttr = new Array();
+   this.colors = ["steelblue", "red", "green", "darkviolet", "orange", "sienna"]; // 6 colors right now, maybe add more ?
 }
 
 
 //  Aux Functions
+
+BarChart.prototype.maxOfAttr = function(data, attr){
+    var max = 0;
+    var temp = 0;
+    for(var i=0; i < data.length; i++){
+        temp = data[i][attr];
+        if(temp > max){
+            max = temp;
+        }
+    }
+    return max;
+};
+
+// Compute Max between drawable attributes in data
+BarChart.prototype.maxDrawAttr = function(data){
+    var max = 0;
+    var temp = 0;
+    var attr = "";
+    if(this.drawAttr.length == 0){
+        return max;
+    }
+    else{
+        for(var i=0; i < this.drawAttr.length; i++){
+            attr = this.drawAttr[i].toString();
+            temp = this.maxOfAttr(data, attr);
+            //console.log("maxDrawAttr: " + this.drawAttr[i] + " with max: " + temp);
+            if(temp > max){
+                max = temp;
+            }
+        }
+        return max;
+    }
+};
+
 
 BarChart.prototype.addRecentAttr = function (attr){
 
@@ -92,16 +127,11 @@ BarChart.prototype.draw = function(data){
     width = svg.attr("width") - margin.left - margin.right,
     height = svg.attr("height") - margin.top - margin.bottom;
 
-    //Get attribute to use for bars from object
-    if(this.drawAttr.length > 0){
-        var attr = this.drawAttr[0];
-    }else{
-        return;
-    }
-
     //set the Ranges
-    var x = d3.scaleBand().range([0, width]).padding(0.1);
+    var x0 = d3.scaleBand().range([0, width]).padding(0.1);
+    var x1 = d3.scaleBand();
     var y = d3.scaleLinear().range([height, 0]);
+    var color = d3.scaleOrdinal().range(this.colors);
 
     // selects the svg object of the specified div in the body of the page
     // appends a 'group' element to 'svg'
@@ -112,36 +142,61 @@ BarChart.prototype.draw = function(data){
         .append("g")
         .attr("transform","translate(" + margin.left + "," + margin.top + ")");
 
+    var attrs = this.drawAttr;
+    console.log(attrs);
+
+
+    data.forEach(function(d) {
+        d.ages = attrs.map(function(name) { return {name: name, value: +d[name]}; });
+    });
+
+    console.log(data);
 
     // Scale the range of the data
-    //console.log("MIN, MAX: " + d3.extent(data, function(d) { return d[attr]; }) );
-    //console.log("MAX: " + d3.max(data, function(d) { return d[attr]; }) );
-
-    x.domain( data.map(function(d) { return d.year; }) );
-    y.domain( [0, d3.max(data, function(d) { return d[attr]; }) ] );
+    x0.domain( data.map(function(d) { return d.country; }) );
+    x1.domain(attrs).range([0, x0.bandwidth()]);
+    y.domain( [0, this.maxDrawAttr(data) ] );
 
     // Axis vars
-    var xAxis = d3.axisBottom(x);
+    var xAxis = d3.axisBottom(x0);
     var yAxis = d3.axisLeft(y);
 
     //  DRAW BARS
-          
-    var bar = svg.selectAll("g")
+
+    var attribute = svg.selectAll(".attribute")
         .data(data)
         .enter()
-        .append("rect")
-        .attr("x", function(d) { return x(d.year); } )
-        .attr("y", function(d) { return y(d[attr]); } )
-        .attr("height", function(d) { return height - y(d[attr]); })
-        .attr("width", x.bandwidth());
+        .append("g")
+        .attr("class", "attribute")
+        .attr("transform", function(d) { return "translate(" + x0(d.country) + ",0)"; } );
+
+     attribute.selectAll("rect")
+        .data(function(d) { return d.ages; })
+        .enter().append("rect")
+        .attr("width", x1.bandwidth() )
+        .attr("x", function(d) { return x1(d.name); })
+        .attr("y", function(d) { return y(d.value); })
+        .attr("height", function(d) { return height - y(d.value); })
+        .style("fill", function(d) { return color(d.name); });
+          
+    // var bar = svg.selectAll("g")
+    //     .data(data)
+    //     .enter()
+    //     .append("rect")
+    //     .attr("x", function(d) { return x(d.year); } )
+    //     .attr("y", function(d) { return y(d[attr]); } )
+    //     .attr("height", function(d) { return height - y(d[attr]); })
+    //     .attr("width", x.bandwidth());
 
     // Add the X Axis
     svg.append("g")
+        .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
 
     // Add the Y Axis
     svg.append("g")
+        .attr("class", "y axis")
         .call(yAxis);
 
 };
