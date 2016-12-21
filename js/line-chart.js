@@ -300,12 +300,12 @@ LineChart.prototype.draw = function(data, countries){
         .on('mouseout', tool_tip.hide);
 
     // Draw the X Axis
-    var gY = svg.append("g")
+    var gX = svg.append("g")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
 
     // Draw the Y Axis
-    var gX = svg.append("g")
+    var gY = svg.append("g")
         .call(yAxis); 
 
     //country abbreviation array
@@ -334,6 +334,6 @@ LineChart.prototype.draw = function(data, countries){
         svg.select(".legendOrdinal")
             .call(legendOrdinal);  
 
-    }, 50); //  200 ms
+    }, 150); //  200 ms
 
 };

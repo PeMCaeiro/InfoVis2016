@@ -165,6 +165,7 @@ BarChart.prototype.draw = function(data){
     //console.log(data);
 
     max_attr = this.maxDrawAttr(data);
+    
     // Scale the range of the data
     x0.domain( data.map(function(d) { return d.country; }) );
     x1.domain(attrs).range([0, x0.bandwidth()]);

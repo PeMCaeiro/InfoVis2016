@@ -4,6 +4,7 @@
 
 var bar_chart = new BarChart();
 var line_chart = new LineChart();
+var heatmap = new Heatmap();
 
 //	Functions
 
@@ -47,6 +48,8 @@ function draw_range_graphs(){
 
 	line_chart.computeDrawAttr(selectedGlobalAttr);
 	line_chart.draw(mainSelectionData, selectedCountries);
+	heatmap.computeDrawAttr(selectedGlobalAttr);
+	heatmap.draw(mainSelectionData, selectedCountries);
 
 }
 
