@@ -88,6 +88,10 @@ footer {
   font-size: 10px;
 }
 
+#heatmap rect {
+  stroke: black;
+}
+
 /* D3-Tip */
 
 .d3-tip {
