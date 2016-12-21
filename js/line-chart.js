@@ -136,7 +136,10 @@ LineChart.prototype.draw = function(data, countries){
     var svg = d3.select("#line_chart")
         .append("svg")
         .attr("width",w)
-        .attr("height",h);
+        .attr("height",h)
+        .call(d3.zoom().on("zoom", function () {
+            svg.attr("transform", d3.event.transform)
+        }));
 
     //Create initial variables from svg
     svg = d3.select("svg"),

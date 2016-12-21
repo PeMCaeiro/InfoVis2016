@@ -149,12 +149,14 @@ BarChart.prototype.draw = function(data){
     svg = d3.select("#bar_chart").select("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
+        .call(d3.zoom().on("zoom", function () {
+            svg.attr("transform", d3.event.transform)
+        }))
         .append("g")
-        .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+        .attr("transform","translate(" + margin.left + "," + margin.top + ")"); 
 
     var attrs = this.drawAttr;
     console.log(attrs);
-
 
     data.forEach(function(d) {
         d.ages = attrs.map(function(name) { return {name: name, value: +d[name]}; });
@@ -180,9 +182,10 @@ BarChart.prototype.draw = function(data){
         .attr("class", "attribute")
         .attr("transform", function(d) { return "translate(" + x0(d.country) + ",0)"; } );
 
-     attribute.selectAll("rect")
+    var bars = attribute.selectAll(".bar")
         .data(function(d) { return d.ages; })
         .enter().append("rect")
+        .attr("class", "bar")
         .attr("width", x1.bandwidth() )
         .attr("x", function(d) { return x1(d.name); })
         .attr("y", function(d) { return y(d.value); })
@@ -192,13 +195,13 @@ BarChart.prototype.draw = function(data){
         .on('mouseout', tool_tip.hide);
 
     // Add the X Axis
-    svg.append("g")
+    var gX = svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
 
     // Add the Y Axis
-    svg.append("g")
+    var gY = svg.append("g")
         .attr("class", "y axis")
         .call(yAxis);
 
