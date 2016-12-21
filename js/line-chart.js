@@ -205,7 +205,7 @@ LineChart.prototype.draw = function(data, countries){
     var tool_tip = d3.tip()
         .attr("class", "d3-tip")
         .offset([-8, 0])
-        .html(function(d) { return "Country: " + d.country + "</br>" + "</br>" + "Attribute: " + sAttributeToReal(attr) + "</br>" + "</br>" +  "Year: " + d.year + "</br>" + "</br>" +  "Value: " + shortenLargeNumber(d[attr], 4) ; });
+        .html(function(d) { return "Country: " + d.country + "</br>" + "Year: " + d.year + "</br>" + "</br>" + "Attribute: " + sAttributeToReal(attr) + "</br>" +  "Value: " + shortenLargeNumber(d[attr], 4) ; });
         //.html(function(d) { return "Points: " + d.upoints ; });
             
     d3.select("svg").call(tool_tip);
@@ -334,6 +334,6 @@ LineChart.prototype.draw = function(data, countries){
         svg.select(".legendOrdinal")
             .call(legendOrdinal);  
 
-    }, 150); //  200 ms
+    }, 8); //  200 ms
 
 };

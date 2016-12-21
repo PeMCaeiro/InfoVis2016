@@ -189,7 +189,7 @@ Heatmap.prototype.draw = function(data, countries){
     var tool_tip = d3.tip()
         .attr("class", "d3-tip")
         .offset([-8, 0])
-        .html(function(d) { return "Country: " + d.country + "</br>" + "</br>" + "Attribute: " + sAttributeToReal(attr) + "</br>" + "</br>" +  "Year: " + d.year + "</br>" + "</br>" +  "Value: " + shortenLargeNumber(d[attr], 4) ; });
+        .html(function(d) { return "Country: " + d.country + "</br>" + "Year: " + d.year + "</br>" + "</br>" + "Attribute: " + sAttributeToReal(attr) + "</br>" +  "Value: " + shortenLargeNumber(d[attr], 4) ; });
         //.html(function(d) { return "Points: " + d.upoints ; });
 
     var min_date = d3.min(data, function(d) { return d["date"]; });
@@ -225,6 +225,9 @@ Heatmap.prototype.draw = function(data, countries){
             .attr("transform", "translate(" + gridSize / 2 + ", -6)")
             .attr("class", "years");
 
+    if(this.drawAttr.length <= 0){
+    	return
+    }
 
     var colorScale = d3.scaleQuantile().range(d3.schemeBlues[9]);
 
