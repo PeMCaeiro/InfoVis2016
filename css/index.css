@@ -78,6 +78,16 @@ footer {
   stroke-width: 2px;
 }
 
+#heatmap text.years{
+  font-family: sans-serif;
+  font-size: 10px;
+}
+
+#heatmap text.country{
+  font-family: sans-serif;
+  font-size: 10px;
+}
+
 /* D3-Tip */
 
 .d3-tip {
