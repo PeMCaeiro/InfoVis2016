@@ -152,37 +152,37 @@ LineChart.prototype.draw = function(data, countries){
         var attr = this.drawAttr[0];
     }else{
         // selects the svg object of the specified div in the body of the page
-    // appends a 'group' element to 'svg'
-    // moves the 'group' element to the top left margin
-    svg = d3.select("#line_chart").select("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+        // appends a 'group' element to 'svg'
+        // moves the 'group' element to the top left margin
+        svg = d3.select("#line_chart").select("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform","translate(" + margin.left + "," + margin.top + ")");
         //set the Ranges
         var x = d3.scaleTime().range([0, width]);
         var y = d3.scaleLinear().range([height, 0]);
- var min_date = d3.min(data, function(d) { return d["date"]; });
-    var max_date =  d3.max(data, function(d) { return d["date"]; });
+        var min_date = d3.min(data, function(d) { return d["date"]; });
+        var max_date =  d3.max(data, function(d) { return d["date"]; });
         x.domain( [min_date, max_date] );
-    var max_attr = this.maxDrawAttr(data);
-    y.domain( [0, 0 ] );
+        var max_attr = this.maxDrawAttr(data);
+        y.domain( [0, 0 ] );
 
         // Axis vars
-    var xAxis = d3.axisBottom(x)
-        .tickFormat(d3.timeFormat("%Y"))
-        .ticks(numberTicks); //Axis date format;
+        var xAxis = d3.axisBottom(x)
+            .tickFormat(d3.timeFormat("%Y"))
+            .ticks(numberTicks); //Axis date format;
 
-    var yAxis = d3.axisLeft(y);
+        var yAxis = d3.axisLeft(y);
 
-        // Draw the X Axis
-        svg.append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis);
+            // Draw the X Axis
+            svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
 
-        // Draw the Y Axis
-        svg.append("g")
-            .call(yAxis); 
+            // Draw the Y Axis
+            svg.append("g")
+                .call(yAxis); 
 
         return;
     }
@@ -205,7 +205,7 @@ LineChart.prototype.draw = function(data, countries){
     var tool_tip = d3.tip()
         .attr("class", "d3-tip")
         .offset([-8, 0])
-        .html(function(d) { return "Country: " + d.country + "</br>" + "</br>" + "Attribute: " + attr + "</br>" + "</br>" +  "Year: " + d.year + "</br>" + "</br>" +  "Value: " + d[attr] ; });
+        .html(function(d) { return "Country: " + d.country + "</br>" + "</br>" + "Attribute: " + sAttributeToReal(attr) + "</br>" + "</br>" +  "Year: " + d.year + "</br>" + "</br>" +  "Value: " + shortenLargeNumber(d[attr], 4) ; });
         //.html(function(d) { return "Points: " + d.upoints ; });
             
     d3.select("svg").call(tool_tip);
@@ -231,7 +231,24 @@ LineChart.prototype.draw = function(data, countries){
         .tickFormat(d3.timeFormat("%Y"))
         .ticks(numberTicks); //Axis date format;
 
-    var yAxis = d3.axisLeft(y);
+    if(max_attr >= 1000000000){
+        var tickScale = 1e9;
+        var f = d3.formatPrefix(".1", tickScale);
+        var yAxis = d3.axisLeft(y)
+            .tickFormat(function(d) { return f(d).replace('G', 'B'); });
+    }else if(max_attr < 1000000000 && max_attr >= 1000000){
+        var tickScale = 1e6;
+        var f = d3.formatPrefix(".1", tickScale);
+        var yAxis = d3.axisLeft(y)
+            .tickFormat(f);
+    }else if(max_attr < 1000000 && max_attr >= 100000){
+        var tickScale = 1e3;
+        var f = d3.formatPrefix(".1", tickScale);
+        var yAxis = d3.axisLeft(y)
+            .tickFormat(f);
+    }else if(max_attr < 100000){
+        var yAxis = d3.axisLeft(y);
+    }
 
     this.valuelines = new Array();
     var country = "";;
@@ -283,35 +300,40 @@ LineChart.prototype.draw = function(data, countries){
         .on('mouseout', tool_tip.hide);
 
     // Draw the X Axis
-    svg.append("g")
+    var gY = svg.append("g")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
 
     // Draw the Y Axis
-    svg.append("g")
+    var gX = svg.append("g")
         .call(yAxis); 
 
+    //country abbreviation array
+    aux_countries = new Array();
+    for(var i=0; i < countries.length; i++){
+        aux_countries.push( sCountryToFewer(countries[i]) );
+    }
 
     //Add legend - needs timeout
     var colors_array = this.colors;
     setTimeout(function(){
 
         var ordinal = d3.scaleOrdinal()
-            .domain(countries)
+            .domain(aux_countries)
             .range(colors_array);
 
         svg.append("g")
             .attr("class", "legendOrdinal")
-            .attr("transform", "translate(400,0)");
+            .attr("transform", "translate(450,0)");
 
         var legendOrdinal = d3.legendColor()
-            .shape("path", d3.symbol().type(d3.symbolTriangle).size(150)())
+            .shape("path", d3.symbol().type(d3.symbolCircle).size(150)())
             .shapePadding(10)
             .scale(ordinal);
 
         svg.select(".legendOrdinal")
             .call(legendOrdinal);  
 
-    }, 200); //  200 ms
+    }, 50); //  200 ms
 
 };

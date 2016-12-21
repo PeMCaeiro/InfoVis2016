@@ -132,7 +132,7 @@ BarChart.prototype.draw = function(data){
     var tool_tip = d3.tip()
         .attr("class", "d3-tip")
         .offset([-8, 0])
-        .html(function(d) { return "Attribute: " + d.name + "</br>" + "</br>" +  "Value: " + d.value ; });
+        .html(function(d) { return "Attribute: " + sAttributeToReal(d.name) + "</br>" + "</br>" +  "Value: " + shortenLargeNumber(d.value, 4) ; });
         //.html(function(d) { return "Points: " + d.upoints ; });
             
     d3.select("svg").call(tool_tip);
@@ -156,14 +156,15 @@ BarChart.prototype.draw = function(data){
         .attr("transform","translate(" + margin.left + "," + margin.top + ")"); 
 
     var attrs = this.drawAttr;
-    console.log(attrs);
+    //console.log(attrs);
 
     data.forEach(function(d) {
         d.ages = attrs.map(function(name) { return {name: name, value: +d[name]}; });
     });
 
-    console.log(data);
+    //console.log(data);
 
+    max_attr = this.maxDrawAttr(data);
     // Scale the range of the data
     x0.domain( data.map(function(d) { return d.country; }) );
     x1.domain(attrs).range([0, x0.bandwidth()]);
@@ -171,7 +172,25 @@ BarChart.prototype.draw = function(data){
 
     // Axis vars
     var xAxis = d3.axisBottom(x0);
-    var yAxis = d3.axisLeft(y);
+
+    if(max_attr >= 1000000000){
+        var tickScale = 1e9;
+        var f = d3.formatPrefix(".1", tickScale);
+        var yAxis = d3.axisLeft(y)
+            .tickFormat(function(d) { return f(d).replace('G', 'B'); });
+    }else if(max_attr < 1000000000 && max_attr >= 1000000){
+        var tickScale = 1e6;
+        var f = d3.formatPrefix(".1", tickScale);
+        var yAxis = d3.axisLeft(y)
+            .tickFormat(f);
+    }else if(max_attr < 1000000 && max_attr >= 100000){
+        var tickScale = 1e3;
+        var f = d3.formatPrefix(".1", tickScale);
+        var yAxis = d3.axisLeft(y)
+            .tickFormat(f);
+    }else if(max_attr < 100000){
+        var yAxis = d3.axisLeft(y);
+    }
 
     //  DRAW BARS
 
