@@ -38,16 +38,17 @@ footer {
   stroke-width: 0.3px;
 }
 
-#choropleth_map .tract {
-  fill: #ccc;
+#choropleth_map .region {
+  /*fill: #ccc;*/
+  fill: white;
   fill-opacity: 0.8;
   stroke: #3b3b3b;
   stroke-width: 0.3px;
 }
 
 #choropleth_map .graticule {
-    fill: none;
-    stroke: #777;
+  fill: none;
+  stroke: #777;
   stroke-width: 0.3px;
 }
   

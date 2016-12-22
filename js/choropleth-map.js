@@ -138,16 +138,28 @@ Choropleth.prototype.computeDrawAttr = function(globalAttributes){
 Choropleth.prototype.draw = function(data_memory, countries){
 
     var width = 960,
-    height = 360;
+    height = 360,
+    buckets = 9;
 
-    //var projection = d3.geoNaturalEarth();
-    //var projection = d3.geoMercator();
+    var svg = d3.select("#choropleth_map").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .call(d3.zoom().on("zoom", function () {
+                    svg.attr("transform", d3.event.transform)
+            }));
+            //.attr("transform", "translate( -940 , -84 ) scale(2.8)");
+
+    var max_attr = this.maxDrawAttr(data_memory);
+    var colorScale = d3.scaleQuantile().range(d3.schemeBlues[9]);
+    var attr = this.drawAttr[0];
+
+    colorScale.domain( [0, buckets - 1, max_attr] );
 
     d3.json('js/eu.topo.json', function(err, data) {
 
         var land = topojson.feature(data, data.objects.europe);
 
-        //console.log(land);
+        console.log(land);
         
         //var path = d3.geoPath(projection);
         var projection = d3.geoMercator()
@@ -158,20 +170,28 @@ Choropleth.prototype.draw = function(data_memory, countries){
         
         // var graticule = d3.geoGraticule()
         //     .step([5, 5]);
-        
-        var svg = d3.select("#choropleth_map").append("svg")
-            .attr("width", width)
-            .attr("height", height)
-            .call(d3.zoom().on("zoom", function () {
-                    svg.attr("transform", d3.event.transform)
-            }));
-            //.attr("transform", "translate( -940 , -84 ) scale(2.8)");
 
         svg.selectAll("path")
             .data(land.features)
             .enter().append("path")
-              .attr("class", "tract")
-              .attr("d", path);
+            .attr("class", "region")
+            .attr("d", path)
+            .style("fill", function(d){
+                var name = d.properties.name;
+                //console.log(countries);
+                //console.log(name);
+                if( isInArray(name, countries) ){
+                    for(var i=0; i<data_memory.length; i++){
+                        if(data_memory[i]["country"] == name){
+                            //console.log(name);
+                            return colorScale(data_memory[i][attr]);
+                        }
+                    }
+                }else{
+                    return "white";
+                }
+                //
+            });
 
     });
     

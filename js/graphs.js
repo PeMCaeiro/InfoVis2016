@@ -16,16 +16,16 @@ var choropleth = new Choropleth();
 // Main draw functions
 
 function draw_map(){
-	var mainSelectionData = filterMainByCountries(mainData, selectedCountries);
+	var mainSelectionData = filterMainByCountries(mainData, allCountries);
 
-	mainSelectionData = filterByYearRange(mainSelectionData, first_year, second_year);
+	mainSelectionData = filterByYearRange(mainSelectionData, first_year, first_year);
 	
 	console.log("Entered Maps");
 	console.log("Data to draw:");
 	console.log(mainSelectionData);
 
 	choropleth.computeDrawAttr(selectedGlobalAttr);
-	choropleth.draw(mainSelectionData, selectedCountries);
+	choropleth.draw(mainSelectionData, allCountries);
 }
 
 function draw_year_graphs(){

@@ -3,6 +3,11 @@
 // Global Variables
 
 var selectedCountries = new Array();
+var allCountries = new Array( "Austria", "Belgium", "Bulgaria", "Croatia", "Cyprus", "Czech Republic", "Denmark",
+    "Estonia", "Finland", "France", "Germany", "Greece", "Hungary", "Ireland", "Italy", "Latvia", "Lithuania",
+    "Luxembourg", "Malta", "Netherlands", "Poland", "Portugal", "Romania", "Slovakia", "Spain", "Sweden", "United Kingdom"  );
+
+console.log(allCountries);
 
 setTimeout(function(){
 
