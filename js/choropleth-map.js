@@ -35,9 +35,10 @@ var svg = d3.select("#choropleth_map")
         .attr("width",w)
         .attr("height",h);
 		
-svg = d3.select("#svg"),
-    width = +svg.attr("width"),
-    height = +svg.attr("height");
+svg = d3.select("svg"),
+    margin = {top: 20, right: 70, bottom: 30, left: 70},
+    width = svg.attr("width") - margin.left - margin.right,
+    height = svg.attr("height") - margin.top - margin.bottom;
 
 var unemployment = d3.map();
 
@@ -86,11 +87,8 @@ g.call(d3.axisBottom(x)
 
 d3.queue()
     .defer(d3.json, "https://d3js.org/us-10m.v1.json")
-    .defer(d3.tsv, "TODO", function(d) { unemployment.set(d.id, +d.rate); })
-    .await(ready);
+    //.defer(d3.tsv, "TODO", function(d) { unemployment.set(d.id, +d.rate); })
 
-function ready(error, us) {
-  if (error) throw error;
 
   svg.append("g")
       .attr("class", "counties")
