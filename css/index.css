@@ -92,6 +92,12 @@ footer {
   stroke: black;
 }
 
+#scatterplot text{
+  font-family: sans-serif;
+  font-size: 10px;
+}
+
+
 /* D3-Tip */
 
 .d3-tip {

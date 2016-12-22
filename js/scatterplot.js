@@ -262,25 +262,30 @@ Scatterplot.prototype.draw = function(data, countries){
   svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
-      .call(xAxis)
-    .append("text")
-      .attr("class", "label")
-      .attr("x", width)
-      .attr("y", -6)
-      .style("text-anchor", "end")
+      .call(xAxis);
+
+    // text label for the x axis
+  svg.append("text")             
+      .attr("transform",
+            "translate(" + (width/2) + " ," + 
+                           (height + margin.top + 10) + ")")
+      .style("text-anchor", "middle")
       .text(sAttributeToReal(attr1));
 
   // y-axis
   svg.append("g")
       .attr("class", "y axis")
-      .call(yAxis)
-    .append("text")
-      .attr("class", "label")
+      .call(yAxis);
+
+    // text label for the y axis
+  svg.append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", 6)
-      .attr("dy", ".71em")
-      .style("text-anchor", "end")
-      .text(sAttributeToReal(attr2));
+      .attr("y", 0 - margin.left)
+      .attr("x",0 - (height / 2) + 20)
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text(sAttributeToReal(attr2));      
+
 
       // draw dots
     svg.selectAll(".dot")
