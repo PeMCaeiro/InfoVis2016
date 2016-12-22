@@ -146,8 +146,8 @@ LineChart.prototype.draw = function(data, countries){
     //Create initial variables from svg
     svg = d3.select("svg"),
     margin = {top: 20, right: 80, bottom: 30, left: 110},
-    width = svg.attr("width") - margin.left - margin.right,
-    height = svg.attr("height") - margin.top - margin.bottom;
+    width = (w - margin.left - margin.right),
+    height = (h - margin.top - margin.bottom);
 
     //Get attribute to use for bars from object
     if(this.drawAttr.length > 0){
@@ -326,7 +326,7 @@ LineChart.prototype.draw = function(data, countries){
 
         svg.append("g")
             .attr("class", "legendOrdinal")
-            .attr("transform", "translate(450,0)");
+            .attr("transform", "translate(650,0)");
 
         var legendOrdinal = d3.legendColor()
             .shape("path", d3.symbol().type(d3.symbolCircle).size(150)())

@@ -124,8 +124,9 @@ BarChart.prototype.draw = function(data){
     //Create initial variables from svg
     svg = d3.select("svg"),
     margin = {top: 20, right: 80, bottom: 30, left: 110},
-    width = svg.attr("width") - margin.left - margin.right,
-    height = svg.attr("height") - margin.top - margin.bottom;
+    width = (w - margin.left - margin.right),
+    height = (h - margin.top - margin.bottom);
+
 
     // Setup the tool tip.  Note that this is just one example, and that many styling options are available.
     // See original documentation for more details on styling: http://labratrevenge.com/d3-tip/
@@ -147,8 +148,8 @@ BarChart.prototype.draw = function(data){
     // appends a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
     svg = d3.select("#bar_chart").select("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("width", w)
+        .attr("height", h)
         .call(d3.zoom().on("zoom", function () {
             svg.attr("transform", d3.event.transform)
         }))

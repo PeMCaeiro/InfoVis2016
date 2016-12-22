@@ -6,6 +6,7 @@ var bar_chart = new BarChart();
 var line_chart = new LineChart();
 var heatmap = new Heatmap();
 var scatterplot = new Scatterplot();
+var radar_chart = new RadarChart();
 
 //	Functions
 
@@ -30,6 +31,8 @@ function draw_year_graphs(){
 
 	bar_chart.computeDrawAttr(selectedGlobalAttr);
 	bar_chart.draw(mainSelectionData, selectedCountries);
+	radar_chart.computeDrawAttr(selectedGlobalAttr);
+	radar_chart.draw(mainSelectionData, selectedCountries);
 
 }
 
@@ -65,7 +68,7 @@ function draw_range_graphs(){
 function delete_year_graphs(){
 	$("#bar_chart svg").remove();
 	$("#overview svg").remove();
-	$("#radial_chart svg").remove();
+	$("#radar_chart svg").remove();
 }
 
 // Hide & Show Divs functions

@@ -91,6 +91,12 @@ $('#scatterplot').droppable( {
     drop: handleDropScatEvent
 } );
 
+//	Scatterplot
+$('#radar_chart').droppable( {
+    drop: handleDropRadarEvent
+} );
+
+
 //	Handlers from drop events
 
 //Bar Chart
@@ -125,6 +131,15 @@ function handleDropScatEvent( event, ui ) {
 	var draggable = ui.draggable;
 	console.log( 'The attr button with value "' + draggable.attr('value') + '" was dropped onto Scatterplot!' );
 	scatterplot.addRecentAttr(draggable.attr('value'));
+
+	update_graphs(year_range);
+}
+
+//Radar Chart
+function handleDropScatEvent( event, ui ) {
+	var draggable = ui.draggable;
+	console.log( 'The attr button with value "' + draggable.attr('value') + '" was dropped onto Radar Chart!' );
+	radar_chart.addRecentAttr(draggable.attr('value'));
 
 	update_graphs(year_range);
 }
