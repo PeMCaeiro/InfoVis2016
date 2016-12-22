@@ -81,6 +81,16 @@ $('#line_chart').droppable( {
     drop: handleDropLineEvent
 } );
 
+//	Heatmap
+$('#heatmap').droppable( {
+    drop: handleDropHeatEvent
+} );
+
+//	Scatterplot
+$('#scatterplot').droppable( {
+    drop: handleDropScatEvent
+} );
+
 //	Handlers from drop events
 
 //Bar Chart
@@ -97,6 +107,24 @@ function handleDropLineEvent( event, ui ) {
 	var draggable = ui.draggable;
 	console.log( 'The attr button with value "' + draggable.attr('value') + '" was dropped onto Line Chart!' );
 	line_chart.addRecentAttr(draggable.attr('value'));
+
+	update_graphs(year_range);
+}
+
+//Heatmap
+function handleDropHeatEvent( event, ui ) {
+	var draggable = ui.draggable;
+	console.log( 'The attr button with value "' + draggable.attr('value') + '" was dropped onto Heatmap!' );
+	heatmap.addRecentAttr(draggable.attr('value'));
+
+	update_graphs(year_range);
+}
+
+//Scatterplot
+function handleDropScatEvent( event, ui ) {
+	var draggable = ui.draggable;
+	console.log( 'The attr button with value "' + draggable.attr('value') + '" was dropped onto Scatterplot!' );
+	scatterplot.addRecentAttr(draggable.attr('value'));
 
 	update_graphs(year_range);
 }

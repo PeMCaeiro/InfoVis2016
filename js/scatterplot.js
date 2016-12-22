@@ -25,6 +25,19 @@ Scatterplot.prototype.maxOfAttr = function(data, attr){
     return max;
 };
 
+Scatterplot.prototype.minOfAttr = function(data, attr){
+    var min = 99999999999999999999999999999999;
+    var temp = 0;
+    for(var i=0; i < data.length; i++){
+        temp = data[i][attr];
+        if(temp < min){
+            min = temp;
+        }
+    }
+    return min;
+};
+
+
 // Compute Max between drawable attributes in data
 Scatterplot.prototype.maxDrawAttr = function(data){
     var max = 0;
@@ -43,6 +56,27 @@ Scatterplot.prototype.maxDrawAttr = function(data){
             }
         }
         return max;
+    }
+};
+
+// Compute Min between drawable attributes in data
+Scatterplot.prototype.minDrawAttr = function(data){
+    var min = 999999999999999999999999999999999;
+    var temp = 0;
+    var attr = "";
+    if(this.drawAttr.length == 0){
+        return 0;
+    }
+    else{
+        for(var i=0; i < this.drawAttr.length; i++){
+            attr = this.drawAttr[i].toString();
+            temp = this.minOfAttr(data, attr);
+            //console.log("maxDrawAttr: " + this.drawAttr[i] + " with max: " + temp);
+            if(temp < max){
+                min = temp;
+            }
+        }
+        return min;
     }
 };
 
@@ -109,12 +143,14 @@ Scatterplot.prototype.computeDrawAttr = function(globalAttributes){
 
 Scatterplot.prototype.draw = function(data, countries){
 
+    //d3.select(".d3-tip").remove();
+
     //Initial w and h
     var w = 600;
     var h = 300;
 
     //Append the svg object to the specified div in the body of the page
-    var svg = d3.select("#bar_chart")
+    var svg = d3.select("#scatterplot")
         .append("svg")
         .attr("width",w)
         .attr("height",h);
@@ -125,12 +161,17 @@ Scatterplot.prototype.draw = function(data, countries){
     width = svg.attr("width") - margin.left - margin.right,
     height = svg.attr("height") - margin.top - margin.bottom;
 
+    if(this.drawAttr.length < 2){
+        return;
+    }
+
     // Setup the tool tip.  Note that this is just one example, and that many styling options are available.
     // See original documentation for more details on styling: http://labratrevenge.com/d3-tip/
     var tool_tip = d3.tip()
         .attr("class", "d3-tip")
         .offset([-8, 0])
-        .html(function(d) { return "Country: " + d.country + "</br>" + "Year: " + d.year + "</br>" + "</br>" + "Attribute: " + sAttributeToReal(attr) + "</br>" +  "Value: " + shortenLargeNumber(d[attr], 4) ; });
+        .html(function(d) { return "Country: " + d.country + "</br>" + "Year: " + d.year + "</br>" + "</br>" + "Attribute1: " + sAttributeToReal(attr1) + "</br>" +  "Value: " + shortenLargeNumber(d[attr1], 4)
+        + "</br>" + "</br>" + "Attribute2: " + sAttributeToReal(attr2) + "</br>" +  "Value: " + shortenLargeNumber(d[attr2], 4)  ; });
             
     d3.select("svg").call(tool_tip);
 
@@ -140,19 +181,145 @@ Scatterplot.prototype.draw = function(data, countries){
     var y = d3.scaleLinear()
         .range([height, 0]);
 
+    var color = d3.scaleOrdinal().range(this.colors);
+
+    var attr1 = this.drawAttr[0];
+    var attr2 = this.drawAttr[1];
+
+    // setup x 
+    var xValue = function(d) { console.log(attr1); return d[attr1];}, // data -> value
+        xScale = d3.scaleLinear().range([0, width]), // value -> display
+        xMap = function(d) { return xScale(xValue(d));}; // data -> display
+
+    var max_attr = d3.max(data, xValue);
+
+    if(max_attr >= 1000000000){
+        var tickScale = 1e9;
+        var f = d3.formatPrefix(".1", tickScale);
+        var xAxis = d3.axisBottom(xScale)
+            .tickFormat(function(d) { return f(d).replace('G', 'B'); });
+    }else if(max_attr < 1000000000 && max_attr >= 1000000){
+        var tickScale = 1e6;
+        var f = d3.formatPrefix(".1", tickScale);
+        var xAxis = d3.axisBottom(xScale)
+            .tickFormat(f);
+    }else if(max_attr < 1000000 && max_attr >= 100000){
+        var tickScale = 1e3;
+        var f = d3.formatPrefix(".1", tickScale);
+        var xAxis = d3.axisBottom(xScale)
+            .tickFormat(f);
+    }else if(max_attr < 100000){
+        var xAxis = d3.axisBottom(xScale);
+    }
+
+    // setup y
+    var yValue = function(d) { return d[attr2];}, // data -> value
+        yScale = d3.scaleLinear().range([height, 0]), // value -> display
+        yMap = function(d) { return yScale(yValue(d));}; // data -> display
+
+    max_attr = d3.max(data, yValue);
+        
+    if(max_attr >= 1000000000){
+        var tickScale = 1e9;
+        var f = d3.formatPrefix(".1", tickScale);
+        var yAxis = d3.axisLeft(yScale)
+            .tickFormat(function(d) { return f(d).replace('G', 'B'); });
+    }else if(max_attr < 1000000000 && max_attr >= 1000000){
+        var tickScale = 1e6;
+        var f = d3.formatPrefix(".1", tickScale);
+        var yAxis = d3.axisLeft(yScale)
+            .tickFormat(f);
+    }else if(max_attr < 1000000 && max_attr >= 100000){
+        var tickScale = 1e3;
+        var f = d3.formatPrefix(".1", tickScale);
+        var yAxis = d3.axisLeft(yScale)
+            .tickFormat(f);
+    }else if(max_attr < 100000){
+        var yAxis = d3.axisLeft(yScale);
+    }
+
+    // setup fill color
+    var cValue = function(d) { return sCountryToFewer(d["country"]);},
+        color = d3.scaleOrdinal().range(this.colors);
+
     // selects the svg object of the specified div in the body of the page
     // appends a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
-    svg = d3.select("#bar_chart").select("svg")
+    svg = d3.select("#scatterplot").select("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .call(d3.zoom().on("zoom", function () {
             svg.attr("transform", d3.event.transform)
         }))
         .append("g")
-        .attr("transform","translate(" + margin.left + "," + margin.top + ")"); 
+        .attr("transform","translate(" + margin.left + "," + margin.top + ")");
 
-    var attrs = this.drawAttr;
+    // don't want dots overlapping axis, so add in buffer to data domain
+    xScale.domain([d3.min(data, xValue), d3.max(data, xValue)]);
+    yScale.domain([d3.min(data, yValue), d3.max(data, yValue)]);
 
+  // x-axis
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("x", width)
+      .attr("y", -6)
+      .style("text-anchor", "end")
+      .text(sAttributeToReal(attr1));
+
+  // y-axis
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text(sAttributeToReal(attr2));
+
+      // draw dots
+    svg.selectAll(".dot")
+        .data(data)
+        .enter().append("circle")
+        .attr("class", "dot")
+        .attr("r", 3.5)
+        .attr("cx", xMap)
+        .attr("cy", yMap)
+        .style("fill", function(d) { return color(cValue(d));}) 
+        .on('mouseover', tool_tip.show)
+        .on('mouseout', tool_tip.hide);
+
+    //country abbreviation array
+    aux_countries = new Array();
+    for(var i=0; i < countries.length; i++){
+        aux_countries.push( sCountryToFewer(countries[i]) );
+    }
+
+    //Add legend - needs timeout
+    var colors_array = this.colors;
+    setTimeout(function(){
+
+        var ordinal = d3.scaleOrdinal()
+            .domain(aux_countries)
+            .range(colors_array);
+
+        svg.append("g")
+            .attr("class", "legendOrdinal")
+            .attr("transform", "translate(475,0)");
+
+        var legendOrdinal = d3.legendColor()
+            .shape("path", d3.symbol().type(d3.symbolCircle).size(150)())
+            .shapePadding(10)
+            .scale(ordinal);
+
+        svg.select(".legendOrdinal")
+            .call(legendOrdinal);  
+
+    }, 8); //  200 ms
 
 }

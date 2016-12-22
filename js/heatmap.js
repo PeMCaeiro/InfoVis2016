@@ -154,7 +154,7 @@ Heatmap.prototype.draw = function(data, countries){
 
     //Create initial variables from svg
     svg = d3.select("svg"),
-    margin = {top: 20, right: 70, bottom: 30, left: 70},
+    margin = {top: 40, right: 70, bottom: 30, left: 70},
     width = svg.attr("width") - margin.left - margin.right,
     height = svg.attr("height") - margin.top - margin.bottom;
     

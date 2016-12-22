@@ -5,6 +5,7 @@
 var bar_chart = new BarChart();
 var line_chart = new LineChart();
 var heatmap = new Heatmap();
+var scatterplot = new Scatterplot();
 
 //	Functions
 
@@ -24,6 +25,8 @@ function draw_year_graphs(){
 	console.log("Entered draw_year_graphs");
 	console.log("Data to draw:");
 	console.log(mainSelectionData);
+
+	d3.select(".d3-tip").remove();
 
 	bar_chart.computeDrawAttr(selectedGlobalAttr);
 	bar_chart.draw(mainSelectionData, selectedCountries);
@@ -46,10 +49,14 @@ function draw_range_graphs(){
 	console.log("Data to draw:");
 	console.log(mainSelectionData);
 
+	d3.select(".d3-tip").remove();
+
 	line_chart.computeDrawAttr(selectedGlobalAttr);
 	line_chart.draw(mainSelectionData, selectedCountries);
 	heatmap.computeDrawAttr(selectedGlobalAttr);
 	heatmap.draw(mainSelectionData, selectedCountries);
+	scatterplot.computeDrawAttr(selectedGlobalAttr);
+	scatterplot.draw(mainSelectionData, selectedCountries);
 
 }
 
@@ -57,7 +64,7 @@ function draw_range_graphs(){
 
 function delete_year_graphs(){
 	$("#bar_chart svg").remove();
-	$("#scatterplot svg").remove();
+	$("#overview svg").remove();
 	$("#radial_chart svg").remove();
 }
 
@@ -72,8 +79,8 @@ function show_year_graphs(){
 
 function delete_range_graphs(){
 	$("#line_chart svg").remove();
-	$("#overview svg").remove();
 	$("#heatmap svg").remove();
+	$("#scatterplot svg").remove();
 }
 
 function hide_range_graphs(){

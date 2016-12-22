@@ -128,6 +128,8 @@ LineChart.prototype.computeDrawAttr = function(globalAttributes){
 // Add methods like this.  All objects of this type will be able to invoke this
 LineChart.prototype.draw = function(data, countries){
 
+    //d3.select(".d3-tip").remove();
+
 	//Initial w and h
     var w = 800;
     var h = 300;
