@@ -8,7 +8,7 @@ function RadarChart(){
    this.maxAttr = 5;
    this.maxCountries = 2;
    this.drawAttr = new Array();
-   this.colors = ["steelblue", "red", "green", "darkviolet", "orange", "sienna"]; // 6 colors right now, maybe add more ?
+   this.colors = ["red", "green", "darkviolet", "orange", "mediumblue", "sienna"]; // 6 colors right now, maybe add more ?
 }
 
 
@@ -113,7 +113,7 @@ RadarChart.prototype.computeDrawAttr = function(globalAttributes){
 RadarChart.prototype.draw = function(data, countries){
 
     var cfg = {
-         radius: 5,
+         radius: 3.5,
          w: 250,
          h: 250,
          factor: 1,

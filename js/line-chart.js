@@ -8,7 +8,7 @@ function LineChart(){
    this.maxAttr = 1;
    this.drawAttr = new Array();
    this.valuelines = new Array();
-   this.colors = ["steelblue", "red", "green", "darkviolet", "orange", "sienna"]; // 6 colors right now, maybe add more ?
+   this.colors = ["red", "green", "darkviolet", "orange", "mediumblue", "sienna"]; // 6 colors right now, maybe add more ?
 }
 
 LineChart.prototype.maxOfAttr = function(data, attr){

@@ -7,7 +7,7 @@ function BarChart(){
    this.countries = new Array();
    this.maxAttr = 3;
    this.drawAttr = new Array();
-   this.colors = ["steelblue", "red", "green", "darkviolet", "orange", "sienna"]; // 6 colors right now, maybe add more ?
+   this.colors = ["red", "green", "darkviolet", "orange", "mediumblue", "sienna"]; // 6 colors right now, maybe add more ?
 }
 
 
@@ -112,7 +112,7 @@ BarChart.prototype.computeDrawAttr = function(globalAttributes){
 BarChart.prototype.draw = function(data){
 
 	//Initial w and h
-    var w = 800;
+    var w = 900;
     var h = 300;
 
     //Append the svg object to the specified div in the body of the page
@@ -123,7 +123,7 @@ BarChart.prototype.draw = function(data){
 
     //Create initial variables from svg
     svg = d3.select("svg"),
-    margin = {top: 20, right: 80, bottom: 30, left: 110},
+    margin = {top: 20, right: 230, bottom: 30, left: 110},
     width = (w - margin.left - margin.right),
     height = (h - margin.top - margin.bottom);
 
@@ -225,5 +225,33 @@ BarChart.prototype.draw = function(data){
     var gY = svg.append("g")
         .attr("class", "y axis")
         .call(yAxis);
+
+    //attr array
+    aux_attr = new Array();
+    for(var i=0; i < this.drawAttr.length; i++){
+        aux_attr.push( sAttributeToReal( this.drawAttr[i] ) );
+    }
+
+    //Add legend - needs timeout
+    var colors_array = this.colors;
+    setTimeout(function(){
+
+        var ordinal = d3.scaleOrdinal()
+            .domain(aux_attr)
+            .range(colors_array);
+
+        d3.select("#bar_chart").select("svg").append("g")
+            .attr("class", "legendOrdinal")
+            .attr("transform", "translate(690, 30)");
+
+        var legendOrdinal = d3.legendColor()
+            .shape("path", d3.symbol().type(d3.symbolCircle).size(150)())
+            .shapePadding(10)
+            .scale(ordinal);
+
+        d3.select("#bar_chart").select("svg").select(".legendOrdinal")
+            .call(legendOrdinal);  
+
+    }, 9); //  200 ms
 
 };
