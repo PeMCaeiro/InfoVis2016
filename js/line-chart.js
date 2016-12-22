@@ -298,7 +298,7 @@ LineChart.prototype.draw = function(data, countries){
             .style("fill", this.colors[i])
             .attr("cx", function (d) { return x(d.date); })
             .attr("cy", function (d) { return y(d[attr]); })
-            .attr("r", 4)
+            .attr("r", 5)
             .on('mouseover', tool_tip.show)
             .on('mouseout', tool_tip.hide);
 

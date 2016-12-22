@@ -143,6 +143,57 @@ function sAttributeToReal(sAttr){
     return sFewer;
 }
 
+function sRealToAttribute(sAttr){
+    sFewer = "";
+
+    switch (sAttr){
+        case "Arrivals":
+            sFewer = "arrivals";
+            break;
+        case "Departures":
+            sFewer = "departures";
+            break;
+        case "Direct Contribution To GDP (USD $)":
+            sFewer = "directToGdp";
+            break;
+        case "Number of Jobs in Tourism":
+            sFewer = "numJobs";
+            break;
+        case "Expenditures (USD $)":
+            sFewer = "expenditures";
+            break;
+        case "GDP (USD $)":
+            sFewer = "gdp";
+            break;
+        case "Net Occupancy Rate (%)":
+            sFewer = "netOccupancyRate";
+            break;
+        case "Percentage Contribution to GDP (%)":
+            sFewer = "percentToGdp";
+            break;
+        case "Population":
+            sFewer = "population";
+            break;
+        case "Receipts (USD $)":
+            sFewer = "receipts";
+            break;
+        case "Year":
+            sFewer = "year";
+            break;
+        case "Country":
+            sFewer = "country";
+            break;
+        case "Destination":
+            sFewer = "destination";
+            break;
+        case "Number of Trips":
+            sFewer = "numTrips";
+            break;
+    }
+
+    return sFewer;
+}
+
 function shortenLargeNumber(num, digits) {
     //substituted 'G' with 'B'
     var units = ['k', 'M', 'B'],

@@ -136,7 +136,7 @@ function handleDropScatEvent( event, ui ) {
 }
 
 //Radar Chart
-function handleDropScatEvent( event, ui ) {
+function handleDropRadarEvent( event, ui ) {
 	var draggable = ui.draggable;
 	console.log( 'The attr button with value "' + draggable.attr('value') + '" was dropped onto Radar Chart!' );
 	radar_chart.addRecentAttr(draggable.attr('value'));

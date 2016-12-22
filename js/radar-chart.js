@@ -126,7 +126,7 @@ RadarChart.prototype.draw = function(data, countries){
          TranslateX: 80,
          TranslateY: 30,
          ExtraWidthX: 200,
-         ExtraWidthY: 50,
+         ExtraWidthY: 100,
          color: d3.scaleOrdinal().range(this.colors)
     };
 
@@ -147,19 +147,11 @@ RadarChart.prototype.draw = function(data, countries){
             .append("svg")
             .attr("width", cfg.w+cfg.ExtraWidthX)
             .attr("height", cfg.h+cfg.ExtraWidthY)
+            .call(d3.zoom().on("zoom", function () {
+                g.attr("transform", d3.event.transform)
+            }))
             .append("g")
             .attr("transform", "translate(" + cfg.TranslateX + "," + cfg.TranslateY + ")");
-            ;
-
-    // Setup the tool tip.  Note that this is just one example, and that many styling options are available.
-    // See original documentation for more details on styling: http://labratrevenge.com/d3-tip/
-    var tool_tip = d3.tip()
-        .attr("class", "d3-tip")
-        .offset([-8, 0])
-        .html(function(d) { console.log(d); return "Country: " + d.country + "</br>" + "Year: " + d.year + "</br>" + "</br>" + "Attribute: " + sAttributeToReal(property) + "</br>" +  "Value: " + shortenLargeNumber(d[property], 4) ; });
-        //.html(function(d) { return "Points: " + d.upoints ; });
-            
-    d3.select("svg").call(tool_tip);
 
     //Circular segments
     for(var j=0; j<cfg.levels-1; j++){
@@ -296,6 +288,18 @@ RadarChart.prototype.draw = function(data, countries){
         series++;
     });
 
+    var tool_tip = d3.tip()
+        .attr("class", "d3-tip")
+        .offset([-8, 0])
+        .html(function(d) {
+            var attr = $(this).attr('data-id');
+            var value = shortenLargeNumber($(this).attr('alt'), 4);
+            var str = "Country: " + d.country + "</br>" +  " Year: " + d.year + "</br>" + "</br>" + " Attribute: " + attr +  "</br>" + " Value: " + value ;
+            return str;
+        });
+            
+    d3.select("svg").call(tool_tip);
+
     //DRAW POINTS
     series=0;
     data.forEach(function(y, x){
@@ -326,26 +330,17 @@ RadarChart.prototype.draw = function(data, countries){
                 })
                 .attr("data-id", function(j){ return sAttributeToReal(property) })
                 .style("fill", cfg.color(series)).style("fill-opacity", .9)
-                .on('mouseover', function(d){
-                    //console.log("mouseover")
-                    //console.log(d)
-                    var tool_tip = d3.tip()
-                        .attr("class", "d3-tip")
-                        .offset([-8, 0])
-                        .html(function(d) { console.log(d); return "Country: " + d.country + "</br>" + "Year: " + d.year + "</br>" + "</br>" + "Attribute: " + sAttributeToReal(property) + "</br>" +  "Value: " + shortenLargeNumber(d[property], 4) ; });
-                        //.html(function(d) { return "Points: " + d.upoints ; });
-                    d3.select("svg").call(tool_tip);
-                })
-                .on('mouseout', function(d){
-                    d3.select(".d3-tip").remove();
-                    //d3.select(".d3-tip").hide;
-                });
+                .on('mouseover', tool_tip.show)
+                .on('mouseout', tool_tip.hide);
 
             }
         }
 
         series++;
     });
+
+    d3.select("svg").call(tool_tip);
+
 
     //country abbreviation array
     aux_countries = new Array();
