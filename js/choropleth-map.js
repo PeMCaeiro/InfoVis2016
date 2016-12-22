@@ -206,11 +206,18 @@ Choropleth.prototype.draw = function(data_memory, countries){
             .attr("class", "region")
             .attr("d", path)
             .attr("name", function(d){
-                return d.properties.name;
+                var name = d.properties.name;
+                if(name == "Czech Rep."){
+                    name = "Czech Republic";
+                }
+                return name;
             })
             .attr("attr", attr)
             .style("fill", function(d){
                 var name = d.properties.name;
+                if(name == "Czech Rep."){
+                    name = "Czech Republic";
+                }
                 //console.log(countries);
                 //console.log(name);
                 if( isInArray(name, countries) ){
