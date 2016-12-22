@@ -8,10 +8,25 @@ var heatmap = new Heatmap();
 var scatterplot = new Scatterplot();
 var radar_chart = new RadarChart();
 
+var choropleth = new Choropleth();
+
 //	Functions
 
 
 // Main draw functions
+
+function draw_map(){
+	var mainSelectionData = filterMainByCountries(mainData, selectedCountries);
+
+	mainSelectionData = filterByYearRange(mainSelectionData, first_year, second_year);
+	
+	console.log("Entered Maps");
+	console.log("Data to draw:");
+	console.log(mainSelectionData);
+
+	choropleth.computeDrawAttr(selectedGlobalAttr);
+	choropleth.draw(mainSelectionData, selectedCountries);
+}
 
 function draw_year_graphs(){
 
@@ -65,6 +80,11 @@ function draw_range_graphs(){
 
 //Aux functions
 
+function delete_map_graphs(){
+	$("#choropleth_map svg").remove();
+}
+
+
 function delete_year_graphs(){
 	$("#bar_chart svg").remove();
 	$("#overview svg").remove();
@@ -103,11 +123,17 @@ function update_graphs(range){
 		delete_range_graphs();
 		draw_range_graphs();
 		show_range_graphs();
+		
+		delete_map_graphs();
+		draw_map();
 	}
 	else{
 		hide_range_graphs();
 		delete_year_graphs();
 		draw_year_graphs();
 		show_year_graphs();
+		
+		delete_map_graphs();
+		draw_map();
 	}
 }

@@ -1,113 +1,171 @@
-function ChoroplethMap(attribute){
+//  Prototype Heatmap
+
+function Choropleth(){
 
    // Add object properties like this
-   this.attribute = attribute;
+   this.recent_attr = new Array();
    this.countries = new Array();
+   this.maxAttr = 1;
+   this.drawAttr = new Array();
 }
 
-// Attribute Setter
-ChoroplethMap.prototype.setAttribute = function(new_attr){
-    this.attribute = new_attr;
+Choropleth.prototype.maxOfAttr = function(data, attr){
+    var max = 0;
+    var temp = 0;
+    for(var i=0; i < data.length; i++){
+        temp = data[i][attr];
+        if(temp > max){
+            max = temp;
+        }
+    }
+    return max;
 };
 
-// Attribute Getter
-ChoroplethMap.prototype.getAttribute = function(){
-    return this.attribute;
+// Compute Max between drawable attributes in data
+Choropleth.prototype.maxDrawAttr = function(data){
+    var max = 0;
+    var temp = 0;
+    var attr = "";
+    if(this.drawAttr.length == 0){
+        return max;
+    }
+    else{
+        for(var i=0; i < this.drawAttr.length; i++){
+            attr = this.drawAttr[i].toString();
+            temp = this.maxOfAttr(data, attr);
+            //console.log("maxDrawAttr: " + this.drawAttr[i] + " with max: " + temp);
+            if(temp > max){
+                max = temp;
+            }
+        }
+        return max;
+    }
 };
 
-function ready(error, us) {
-  if (error) throw error;
+// Filters data by countries: returns only the data for chosen countries
+Choropleth.prototype.filterByCountry = function(data, country){
+    var treated_data = new Array();
 
-  svg.append("g")
-      .attr("class", "counties")
-    .selectAll("path")
-    .data(topojson.feature(us, us.objects.counties).features)
-    .enter().append("path")
-      .attr("fill", function(d) { return color(d.rate = unemployment.get(d.id)); })
-      .attr("d", path)
-    .append("title")
-      .text(function(d) { return d.rate + "%"; });
+    for(var i=0; i<data.length; i++){
+        //console.log("In filter by country...");
+        //console.log(data[i]);
+        //console.log(country);
+        if( data[i]["country"] == country){
+            treated_data.push(data[i]);
+        }
+    }
 
-  svg.append("path")
-      .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
-      .attr("class", "states")
-      .attr("d", path);
-};  
+    //console.log(treated_data);
+    return treated_data;
+}
 
-ChoroplethMap.prototype.draw = function(data){
-	
-	/*
-	
-	var projection = d3.geoMercator()
-    .scale(1070)
-    .translate([width / 2, height / 2]);
+Choropleth.prototype.getYearsArray = function(data){
+  var years = new Array();
 
-	var path = d3.geo.path()
-    .projection(projection);
-//}*/
+    for(var i=0; i<data.length; i++){
+        if( isInArray(data[i]["year"], years) == false){
+            years.push(data[i]["year"]);
+        }
+    }
 
-var w = 960;
-var h = 600;
+    return years;
+}
 
-var svg = d3.select("#choropleth_map")
-        .append("svg")
-        .attr("width",w)
-        .attr("height",h);
-		
-svg = d3.select("svg"),
-    margin = {top: 20, right: 70, bottom: 30, left: 70},
-    width = svg.attr("width") - margin.left - margin.right,
-    height = svg.attr("height") - margin.top - margin.bottom;
 
-var unemployment = d3.map();
+//  Aux Functions
 
-var path = d3.geoPath();
+Choropleth.prototype.addRecentAttr = function (attr){
 
-var x = d3.scaleLinear()
-    .domain([1, 10])
-    .rangeRound([600, 860]);
+    if(this.recent_attr.length < this.maxAttr){
+        this.recent_attr.push(attr);
+    }
+    // if the recent_attr array is "full", remove first ele and add this new ele at end
+    else{
+        this.recent_attr.shift();
+        this.recent_attr.push(attr);
+    }
 
-var color = d3.scaleThreshold()
-    .domain(d3.range(2, 10))
-    .range(d3.schemeBlues[9]);
+    console.log("Dropped recent attr: " + attr);
+    console.log(this.recent_attr);
 
-var g = svg.append("g")
-    .attr("class", "key")
-    .attr("transform", "translate(0,40)");
+};
 
-g.selectAll("rect")
-  .data(color.range().map(function(d) {
-      d = color.invertExtent(d);
-      if (d[0] == null) d[0] = x.domain()[0];
-      if (d[1] == null) d[1] = x.domain()[1];
-      return d;
-    }))
-  .enter().append("rect")
-    .attr("height", 8)
-    .attr("x", function(d) { return x(d[0]); })
-    .attr("width", function(d) { return x(d[1]) - x(d[0]); })
-    .attr("fill", function(d) { return color(d[0]); });
+Choropleth.prototype.removeRecentAttr = function(attr){
+    var index = this.recent_attr.indexOf(attr);
+    this.recent_attr.splice(index, 1);
+    
+    console.log("Removed recent attr :" + attr);
+    console.log(this.recent_attr);
+};
 
-g.append("text")
-    .attr("class", "caption")
-    .attr("x", x.range()[0])
-    .attr("y", -6)
-    .attr("fill", "#000")
-    .attr("text-anchor", "start")
-    .attr("font-weight", "bold")
-    .text("Unemployment rate");
+Choropleth.prototype.isRecentAttrFull = function(){
+    if(this.recent_attr.length < this.maxAttr){
+        return false;
+    }
+    else{
+        return true;
+    }
+};
 
-g.call(d3.axisBottom(x)
-    .tickSize(13)
-    .tickFormat(function(x, i) { return i ? x : x + "%"; })
-    .tickValues(color.domain()))
-  .select(".domain")
-    .remove();
+// Graphs prioritize clicked/global attr and then dropped/recent attrs
+Choropleth.prototype.computeDrawAttr = function(globalAttributes){
 
-d3.queue()
-    .defer(d3.json, "https://d3js.org/us-10m.v1.json")
-    .defer(d3.tsv, "unemployment.tsv", function(d) { unemployment.set(d.id, +d.rate); })
-    .await(ready);
+    this.drawAttr = new Array();
+    console.log("drawAttr length");
+    console.log(this.drawAttr.length);
 
-};   
+    for(var i=0; i < globalAttributes.length; i++ ){
 
+        if( this.drawAttr.length < this.maxAttr ){
+            this.drawAttr.push(globalAttributes[i]);
+        }
+
+    }
+
+    for(var j=0; j < this.recent_attr.length; j++ ){
+        
+        if( this.drawAttr.length < this.maxAttr ){
+            this.drawAttr.push(this.recent_attr[j]);
+        }
+    }
+
+    console.log("Drawable Attributes: ");
+    console.log(this.drawAttr);
+
+};
+
+// draw the graph
+Choropleth.prototype.draw = function(data_memory, countries){
+
+    var width = 960,
+    height = 400;
+    
+    var projection = d3.geoNaturalEarth();
+    
+    var path = d3.geoPath(projection);
+    
+    var graticule = d3.geoGraticule()
+        .step([5, 5]);
+    
+    var svg = d3.select("#choropleth_map").append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .call(d3.zoom().on("zoom", function () {
+                svg.attr("transform", d3.event.transform)
+        }));
+    
+    svg.append("path")
+        .datum(graticule)
+        .attr("class", "graticule")
+        .attr("d", path);
+        
+    var land = svg.append("g");
+
+    d3.json('js/europe.topo.json', function(err, data) {
+        land.append("path")
+            .datum(topojson.feature(data, data.objects.europe))
+            .attr("class", "land")
+            .attr("d", path);
+    });
+
+};
