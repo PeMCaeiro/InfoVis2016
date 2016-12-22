@@ -141,7 +141,7 @@ Heatmap.prototype.draw = function(data, countries){
 
 	//Initial w and h
     var w = 600;
-    var h = 300;
+    var h = 360;
 
     //Append the svg object to the specified div in the body of the page
     var svg = d3.select("#heatmap")
@@ -155,8 +155,8 @@ Heatmap.prototype.draw = function(data, countries){
     //Create initial variables from svg
     svg = d3.select("svg"),
     margin = {top: 40, right: 70, bottom: 30, left: 70},
-    width = svg.attr("width") - margin.left - margin.right,
-    height = svg.attr("height") - margin.top - margin.bottom;
+    width = w - margin.left - margin.right,
+    height = h - margin.top - margin.bottom;
     
     var years = this.getYearsArray(data);
     var categories_years = years.length;
@@ -165,7 +165,7 @@ Heatmap.prototype.draw = function(data, countries){
     //Tril and error? Try to get it right
     var categories = 15;
     if(categories_years < 7){
-    	categories = 7;
+    	categories = 10;
     }else{
     	categories = categories_years;
     }

@@ -138,34 +138,58 @@ Choropleth.prototype.computeDrawAttr = function(globalAttributes){
 Choropleth.prototype.draw = function(data_memory, countries){
 
     var width = 960,
-    height = 400;
-    
-    var projection = d3.geoNaturalEarth();
-    
-    var path = d3.geoPath(projection);
-    
-    var graticule = d3.geoGraticule()
-        .step([5, 5]);
-    
-    var svg = d3.select("#choropleth_map").append("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .call(d3.zoom().on("zoom", function () {
-                svg.attr("transform", d3.event.transform)
-        }));
-    
-    svg.append("path")
-        .datum(graticule)
-        .attr("class", "graticule")
-        .attr("d", path);
-        
-    var land = svg.append("g");
+    height = 360;
 
-    d3.json('js/europe.topo.json', function(err, data) {
-        land.append("path")
-            .datum(topojson.feature(data, data.objects.europe))
-            .attr("class", "land")
-            .attr("d", path);
+    //var projection = d3.geoNaturalEarth();
+    //var projection = d3.geoMercator();
+
+    d3.json('js/eu.topo.json', function(err, data) {
+
+        var land = topojson.feature(data, data.objects.europe);
+
+        //console.log(land);
+        
+        //var path = d3.geoPath(projection);
+        var projection = d3.geoMercator()
+              .rotate([-9 - 8 / 60, -48 - 41 / 60])
+              .fitExtent([[20, 20], [940, 340]], land);
+        
+        var path = d3.geoPath(projection);
+        
+        // var graticule = d3.geoGraticule()
+        //     .step([5, 5]);
+        
+        var svg = d3.select("#choropleth_map").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .call(d3.zoom().on("zoom", function () {
+                    svg.attr("transform", d3.event.transform)
+            }));
+            //.attr("transform", "translate( -940 , -84 ) scale(2.8)");
+
+        svg.selectAll("path")
+            .data(land.features)
+            .enter().append("path")
+              .attr("class", "tract")
+              .attr("d", path);
+
     });
+    
+    // svg.append("path")
+    //     .datum(graticule)
+    //     .attr("class", "graticule")
+    //     .attr("d", path);
+        
+    // var land = svg.append("g");
+
+    // d3.json('js/eu.topo.json', function(err, data) {
+    //     console.log("MAP");
+    //     console.log(data.objects.europe);
+
+    //     land.append("path")
+    //         .datum(topojson.feature(data, data.objects.europe))
+    //         .attr("class", "land")
+    //         .attr("d", path);
+    // });
 
 };

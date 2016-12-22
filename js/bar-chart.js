@@ -113,7 +113,7 @@ BarChart.prototype.draw = function(data){
 
 	//Initial w and h
     var w = 900;
-    var h = 300;
+    var h = 270;
 
     //Append the svg object to the specified div in the body of the page
     var svg = d3.select("#bar_chart")

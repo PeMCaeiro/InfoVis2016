@@ -157,9 +157,9 @@ Scatterplot.prototype.draw = function(data, countries){
 
     //Create initial variables from svg
     svg = d3.select("svg"),
-    margin = {top: 20, right: 80, bottom: 30, left: 80},
-    width = svg.attr("width") - margin.left - margin.right,
-    height = svg.attr("height") - margin.top - margin.bottom;
+    margin = {top: 35, right: 80, bottom: 30, left: 80},
+    width = w - margin.left - margin.right,
+    height = h - margin.top - margin.bottom;
 
     if(this.drawAttr.length < 2){
         return;
