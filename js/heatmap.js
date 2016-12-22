@@ -164,7 +164,7 @@ Heatmap.prototype.draw = function(data, countries){
 
     //Tril and error? Try to get it right
     var categories = 15;
-    if(categories_years < 7){
+    if(categories_years < 10){
     	categories = 10;
     }else{
     	categories = categories_years;

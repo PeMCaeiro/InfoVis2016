@@ -171,11 +171,44 @@ Choropleth.prototype.draw = function(data_memory, countries){
         // var graticule = d3.geoGraticule()
         //     .step([5, 5]);
 
+        var tool_tip = d3.tip()
+        .attr("class", "d3-tip")
+        .offset([-8, 0])
+        .html(function(d) {
+            var country = $(this).attr('name');
+            var at = $(this).attr('attr');
+            var value = 0;
+            var year = 0;
+            if( isInArray(country, countries) ){
+                //console.log("FAFW")
+                for(var i=0; i<data_memory.length; i++){
+                    if(data_memory[i]["country"] == country){
+                        //console.log("RFWAFWAGAW")
+                        //console.log(name);
+                        value = data_memory[i][at];
+                        year = data_memory[i]["year"];
+                        break;
+                    }
+                } 
+            }else{
+                return "Country: " + country;
+            }
+
+            var str = "Country: " + country + "</br>" +  " Year: " + year + "</br>" + "</br>" + " Attribute: " + sAttributeToReal(at) +  "</br>" + " Value: " + shortenLargeNumber(value, 4) ;
+            return str;
+        });
+            
+        d3.select("svg").call(tool_tip);
+
         svg.selectAll("path")
             .data(land.features)
             .enter().append("path")
             .attr("class", "region")
             .attr("d", path)
+            .attr("name", function(d){
+                return d.properties.name;
+            })
+            .attr("attr", attr)
             .style("fill", function(d){
                 var name = d.properties.name;
                 //console.log(countries);
@@ -188,10 +221,12 @@ Choropleth.prototype.draw = function(data_memory, countries){
                         }
                     }
                 }else{
-                    return "white";
+                    return "#ccc";
                 }
                 //
-            });
+            })
+            .on('mouseover', tool_tip.show)
+            .on('mouseout', tool_tip.hide);;
 
     });
     

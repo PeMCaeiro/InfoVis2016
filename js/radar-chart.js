@@ -356,16 +356,16 @@ RadarChart.prototype.draw = function(data, countries){
             .domain(aux_countries)
             .range(colors_array);
 
-        g.append("g")
+        d3.select("#radar_chart").select("svg").append("g")
             .attr("class", "legendOrdinal")
-            .attr("transform", "translate(200,0)");
+            .attr("transform", "translate(400,30)");
 
         var legendOrdinal = d3.legendColor()
             .shape("path", d3.symbol().type(d3.symbolCircle).size(150)())
             .shapePadding(10)
             .scale(ordinal);
 
-        g.select(".legendOrdinal")
+        d3.select("#radar_chart").select("svg").select(".legendOrdinal")
             .call(legendOrdinal);  
 
     }, 9); //  200 ms
