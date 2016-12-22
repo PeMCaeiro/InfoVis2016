@@ -292,7 +292,7 @@ Scatterplot.prototype.draw = function(data, countries){
         .data(data)
         .enter().append("circle")
         .attr("class", "dot")
-        .attr("r", 3.5)
+        .attr("r", 4)
         .attr("cx", xMap)
         .attr("cy", yMap)
         .style("fill", function(d) { return color(cValue(d));}) 

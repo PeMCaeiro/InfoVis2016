@@ -285,21 +285,42 @@ LineChart.prototype.draw = function(data, countries){
             .style("stroke-width", "2px")
             .style("fill", "none")
             .attr("d", this.valuelines[i]);
+
+        console.log(i);
+
+        svg.selectAll(".nodes")
+            .data(filteredData)
+            .enter()
+            .append("svg:circle")
+            .attr("class", "circle")
+            //.style("stroke", "black")
+            .style("stroke-width", "2px")
+            .style("fill", this.colors[i])
+            .attr("cx", function (d) { return x(d.date); })
+            .attr("cy", function (d) { return y(d[attr]); })
+            .attr("r", 4)
+            .on('mouseover', tool_tip.show)
+            .on('mouseout', tool_tip.hide);
+
+        console.log("PARTE2");
+        console.log(i);
+
+
     }
 
-     svg.selectAll(".circle")
-        .data(data)
-        .enter()
-        .append("svg:circle")
-        .attr("class", "circle")
-        .style("stroke", "black")
-        .style("stroke-width", "2px")
-        .style("fill", "white")
-        .attr("cx", function (d) { return x(d.date); })
-        .attr("cy", function (d) { return y(d[attr]); })
-        .attr("r", 4)
-        .on('mouseover', tool_tip.show)
-        .on('mouseout', tool_tip.hide);
+     // svg.selectAll(".circle")
+     //    .data(data)
+     //    .enter()
+     //    .append("svg:circle")
+     //    .attr("class", "circle")
+     //    .style("stroke", "black")
+     //    .style("stroke-width", "2px")
+     //    .style("fill", "white")
+     //    .attr("cx", function (d) { return x(d.date); })
+     //    .attr("cy", function (d) { return y(d[attr]); })
+     //    .attr("r", 4)
+     //    .on('mouseover', tool_tip.show)
+     //    .on('mouseout', tool_tip.hide);
 
     // Draw the X Axis
     var gX = svg.append("g")
