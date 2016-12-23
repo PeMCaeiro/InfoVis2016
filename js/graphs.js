@@ -11,6 +11,7 @@ var scatterplot = new Scatterplot();
 var radar_chart = new RadarChart();
 
 var choropleth = new Choropleth();
+var overview = new Overview();
 
 //	Functions
 
@@ -64,6 +65,10 @@ function draw_year_graphs(){
 	bar_chart.draw(mainSelectionData, selectedCountries);
 	radar_chart.computeDrawAttr(selectedGlobalAttr);
 	radar_chart.draw(mainSelectionData, selectedCountries);
+	
+	var overvData = filterMainByCountries(mainData, [gKeyCountry]);
+	overvData = filterByYearRange(overvData, first_year, first_year);
+	overview.draw(overvData, gKeyCountry);
 
 }
 

@@ -130,6 +130,15 @@ RadarChart.prototype.draw = function(data, countries){
          color: d3.scaleOrdinal().range(this.colors)
     };
 
+    if(countries.length > 2){
+        var temp_countries = new Array();
+        temp_countries.push(countries[0]);
+        temp_countries.push(countries[1]);
+        data = filterMainByCountries(data, temp_countries);
+    }else{
+        var temp_countries = countries;
+    }
+
     cfg.maxValue = this.maxDrawAttr(data);
     //console.log("config");
     //console.log(cfg.maxValue);
@@ -345,8 +354,8 @@ RadarChart.prototype.draw = function(data, countries){
 
     //country abbreviation array
     aux_countries = new Array();
-    for(var i=0; i < countries.length; i++){
-        aux_countries.push( sCountryToFewer(countries[i]) );
+    for(var i=0; i < temp_countries.length; i++){
+        aux_countries.push( sCountryToFewer(temp_countries[i]) );
     }
 
     //Add legend - needs timeout

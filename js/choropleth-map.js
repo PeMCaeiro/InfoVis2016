@@ -342,10 +342,10 @@ Choropleth.prototype.draw2 = function(data_memory, countries, fixedCountry, mode
     var max_attr = this.maxDrawAttr(data_memory);
     var attr = this.drawAttr[0];
 
-    console.log("DRAW2");
-    console.log(data_memory);
-    console.log(attr);
-    console.log(max_attr);
+    //console.log("DRAW2");
+    //console.log(data_memory);
+    //console.log(attr);
+    //console.log(max_attr);
 
     colorScale.domain( [0, buckets - 1, max_attr] );
 

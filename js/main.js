@@ -43,6 +43,9 @@ $(window).load(function(){
 	//Select a default global attribute - default active button is Arrivals
 	addGlobalAttr("arrivals");
 
+    delete_map_graphs();
+    $("#overview svg").remove();
+    draw_map();
 	//console.log(euData);
 	draw_year_graphs();
 

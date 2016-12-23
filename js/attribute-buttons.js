@@ -2,7 +2,7 @@
 
 //	Global Variables
 
-var maxGlobalAttr = 4;
+var maxGlobalAttr = 5;
 var selectedGlobalAttr = new Array();
 
 

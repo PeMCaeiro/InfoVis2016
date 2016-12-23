@@ -57,8 +57,8 @@
     <div class="row" id="first-row">
 
       <div class="col-sm-2">
-        <p style="font-weight: bold; font-size: 13px;">&thinsp; Country Selection:</p>
-        <select id="countries" class="selectpicker" data-width="fit" data-style="btn-primary btn-custom" data-live-search="true" multiple data-max-options="4" title="Select countries...">
+        <p style="font-weight: bold; font-size: 13px;">&thinsp; Countries Selection:</p>
+        <select id="countries" class="selectpicker" data-width="fit" data-style="btn-primary btn-custom" data-live-search="true" multiple data-max-options="5" title="Select countries...">
           <option value="Austria">Austria</option>
           <option value="Belgium">Belgium</option>
           <option value="Bulgaria">Bulgaria</option>
@@ -91,16 +91,16 @@
 
         <p style="font-weight: bold; font-size: 13px;">&thinsp;</p>
         
-        <p style="font-weight: bold; font-size: 13px;">&thinsp; Mode Selection:</p>
+        <p style="font-weight: bold; font-size: 13px;">&thinsp; Choropleth Mode Selection:</p>
         <select id="mode" class="selectpicker" data-width="fit" data-style="btn-primary btn-custom" data-live-search="true" title="Select map mode...  Default: Free Attribute Choropleth">
-          <option value="free">Free Attribute Choropleth</option>
+          <option value="free">Choosen Attribute</option>
           <option value="dest">Number of Trips by Destination</option>
           <option value="origin">Number of Trips by Origin</option>
         </select>
 
         <p style="font-weight: bold; font-size: 13px;">&thinsp;</p>
 
-        <p style="font-weight: bold; font-size: 13px;">&thinsp; Destination or Origin:</p>
+        <p style="font-weight: bold; font-size: 13px;">&thinsp; Highlight Country (used as Dest./Origin):</p>
         <select id="country" class="selectpicker" data-width="fit" data-style="btn-primary btn-custom" data-live-search="true" title="Select a country...  Default: Austria">
           <option value="Austria">Austria</option>
           <option value="Belgium">Belgium</option>
@@ -293,6 +293,7 @@
     <script src="js/heatmap.js"></script>
     <script src="js/scatterplot.js"></script>
     <script src="js/radar-chart.js"></script>
+    <script src="js/overview.js"></script>
 
     <!-- Files -->
 

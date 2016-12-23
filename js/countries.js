@@ -61,8 +61,8 @@ setTimeout(function(){
 
         update_graphs(year_range);
 
-        console.log("TESTETEETs")
-        console.log(gKeyCountry)
+        //console.log("TESTETEETs")
+        //console.log(gKeyCountry)
 
         //console.log(selectedCountries);
 
