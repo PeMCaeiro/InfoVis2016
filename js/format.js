@@ -27,6 +27,9 @@ function sCountryToFewer(sCountry){
         case "Estonia":
             sFewer = "EE";
             break;
+        case "European Union":
+            sFewer = "EU";
+            break;
         case "Finland":
             sFewer = "FI";
             break;

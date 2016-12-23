@@ -157,24 +157,35 @@ $(document).ready(function() {
     d3.json("data/eu.json", function(data) {
         //console.log(data);  
         //  Get input data and load it into memory
+        var parseTime = d3.timeParse("%Y");
+        var date_string = "";
+        var parsed_date = "";
         var date = new Date();
         for(var i=0;i<data.length;i++){
-            euData[i] = new Object();
+            mainData[i] = new Object();
 
-            euData[i]["arrivals"] = data[i]["arrivalsWW"];
-            euData[i]["country"] = data[i]["country"];
-            euData[i]["departures"] = data[i]["departuresWW"];
-            euData[i]["directToGdp"] = data[i]["directContributionToGdpDollars"];
-            euData[i]["numJobs"] = data[i]["employmentNumberJobs"];
-            euData[i]["expenditures"] = data[i]["expendituresDollars"];
-            euData[i]["gdp"] = data[i]["gdp"];
-            euData[i]["percentToGdp"] = data[i]["percentageContributionGdp"];
-            euData[i]["population"] = data[i]["population"];
-            euData[i]["year"] = data[i]["year"];
-            euData[i]["receipts"] = data[i]["receiptsDollars"];
+            mainData[i]["arrivals"] = data[i]["arrivalsWW"];
+            mainData[i]["country"] = data[i]["country"];
+            mainData[i]["departures"] = data[i]["departuresWW"];
+            mainData[i]["directToGdp"] = data[i]["directContributionToGdpDollars"];
+            mainData[i]["numJobs"] = data[i]["employmentNumberJobs"];
+            mainData[i]["expenditures"] = data[i]["expendituresDollars"];
+            mainData[i]["gdp"] = data[i]["gdp"];
+            mainData[i]["netOccupancyRate"] = 0;
+            mainData[i]["percentToGdp"] = data[i]["percentageContributionGdp"];
+            mainData[i]["population"] = data[i]["population"];
+            mainData[i]["year"] = data[i]["year"];
+            mainData[i]["receipts"] = data[i]["receiptsDollars"];
+            
             date = new Date(data[i]["year"], 0 ,1);
-            euData[i]["date"] = date;
+            date_string = date.getFullYear(); // fullYear
             //console.log(date);
+            parsed_date = parseTime(date_string);
+            //console.log("PARSED: " + parsed_date);
+            mainData[i]["date"] = parsed_date;
+            //console.log(date);
+
+            mainData[i] = removeMainDataObjSentinel(mainData[i]);
 
         }
         //console.log(euData);
