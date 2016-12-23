@@ -124,7 +124,7 @@ RadarChart.prototype.draw = function(data, countries){
          opacityArea: 0.5,
          ToRight: 5,
          TranslateX: 80,
-         TranslateY: 30,
+         TranslateY: 70,
          ExtraWidthX: 200,
          ExtraWidthY: 100,
          color: d3.scaleOrdinal().range(this.colors)
@@ -368,7 +368,7 @@ RadarChart.prototype.draw = function(data, countries){
 
         d3.select("#radar_chart").select("svg").append("g")
             .attr("class", "legendOrdinal")
-            .attr("transform", "translate(400,30)");
+            .attr("transform", "translate(400,60)");
 
         var legendOrdinal = d3.legendColor()
             .shape("path", d3.symbol().type(d3.symbolCircle).size(150)())

@@ -313,16 +313,16 @@ Scatterplot.prototype.draw = function(data, countries){
             .domain(aux_countries)
             .range(colors_array);
 
-        svg.append("g")
+        d3.select("#scatterplot").select("svg").append("g")
             .attr("class", "legendOrdinal")
-            .attr("transform", "translate(475,0)");
+            .attr("transform", "translate(540,30)");
 
         var legendOrdinal = d3.legendColor()
             .shape("path", d3.symbol().type(d3.symbolCircle).size(150)())
             .shapePadding(10)
             .scale(ordinal);
 
-        svg.select(".legendOrdinal")
+        d3.select("#scatterplot").select("svg").select(".legendOrdinal")
             .call(legendOrdinal);  
 
     }, 8); //  200 ms

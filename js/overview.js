@@ -20,7 +20,7 @@ Overview.prototype.draw = function(data, fixedCountry){
 
 	$('#wrapper').append('<img id="theImg" style="display: block; margin: auto; width: 200px; height: 150px;" alt="' + fixedCountry +'" src="img/' + fixedCountry + '.png" />');
 
-	$('#wrapper').append('<p style="text-align: center; font-weight: bold; font-size: 13px;" > </br> ' +  fixedCountry + ' </p>');
+	$('#wrapper').append('<p style="text-align: center; font-weight: bold; font-size: 13px;" > ' +  fixedCountry + ' </p>');
 
 	//console.log("OVERVIEW");
 	//console.log(data);
@@ -33,6 +33,8 @@ Overview.prototype.draw = function(data, fixedCountry){
 	$('#wrapper').append('<p style="text-align: center; font-size: 13px;" > Expenditures: '+ shortenLargeNumber(data[0]["expenditures"], 4) + ' USD ($) </p>');
 
 	$('#wrapper').append('<p style="text-align: center; font-size: 13px;" > Receipts: '+ shortenLargeNumber(data[0]["receipts"], 4) + '  USD ($) </p>');
+
+	$('#wrapper').append('<p style="text-align: center; font-size: 13px;" > Tourism Direct Contribution to GDP: '+ shortenLargeNumber(data[0]["directToGdp"], 4) + ' USD ($) </p>');
 
 
 
