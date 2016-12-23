@@ -146,7 +146,7 @@ Scatterplot.prototype.draw = function(data, countries){
     //d3.select(".d3-tip").remove();
 
     //Initial w and h
-    var w = 600;
+    var w = 850;
     var h = 350;
 
     //Append the svg object to the specified div in the body of the page
@@ -157,7 +157,7 @@ Scatterplot.prototype.draw = function(data, countries){
 
     //Create initial variables from svg
     svg = d3.select("svg"),
-    margin = {top: 35, right: 80, bottom: 30, left: 80},
+    margin = {top: 35, right: 80, bottom: 30, left: 100},
     width = w - margin.left - margin.right,
     height = h - margin.top - margin.bottom;
 
@@ -315,7 +315,7 @@ Scatterplot.prototype.draw = function(data, countries){
 
         d3.select("#scatterplot").select("svg").append("g")
             .attr("class", "legendOrdinal")
-            .attr("transform", "translate(540,30)");
+            .attr("transform", "translate(800,30)");
 
         var legendOrdinal = d3.legendColor()
             .shape("path", d3.symbol().type(d3.symbolCircle).size(150)())

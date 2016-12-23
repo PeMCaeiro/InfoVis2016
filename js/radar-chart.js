@@ -114,7 +114,7 @@ RadarChart.prototype.draw = function(data, countries){
 
     var cfg = {
          radius: 3.5,
-         w: 300,
+         w: 400,
          h: 250,
          factor: 1,
          factorLegend: .85,
@@ -123,9 +123,9 @@ RadarChart.prototype.draw = function(data, countries){
          radians: 2 * Math.PI,
          opacityArea: 0.5,
          ToRight: 5,
-         TranslateX: 80,
+         TranslateX: 200,
          TranslateY: 70,
-         ExtraWidthX: 200,
+         ExtraWidthX: 250,
          ExtraWidthY: 100,
          color: d3.scaleOrdinal().range(this.colors)
     };
@@ -368,7 +368,7 @@ RadarChart.prototype.draw = function(data, countries){
 
         d3.select("#radar_chart").select("svg").append("g")
             .attr("class", "legendOrdinal")
-            .attr("transform", "translate(400,60)");
+            .attr("transform", "translate(600,60)");
 
         var legendOrdinal = d3.legendColor()
             .shape("path", d3.symbol().type(d3.symbolCircle).size(150)())
