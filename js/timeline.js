@@ -2,8 +2,8 @@
 
 // Global Variables
 
-var first_year = 2014;
-var second_year = 2014;
+var first_year = 2012;
+var second_year = 2012;
 //Control boolean to change mode
 var year_range = false;
 
@@ -24,7 +24,7 @@ $(document).ready(function() {
         min: 2000,
         max: 2016,
         range: true,
-        values: [2014, 2014],
+        values: [2012, 2012],
         change: function (event, ui) { // When selected values change perform operations
             if(changeMadeInSelection == false){
                 //console.log("slider Select: " + changeMadeInSelection);

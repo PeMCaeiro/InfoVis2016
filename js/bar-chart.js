@@ -5,7 +5,7 @@ function BarChart(){
    // Add object properties like this
    this.recent_attr = new Array();
    this.countries = new Array();
-   this.maxAttr = 3;
+   this.maxAttr = 4;
    this.drawAttr = new Array();
    this.colors = ["red", "green", "darkviolet", "orange", "mediumblue", "sienna"]; // 6 colors right now, maybe add more ?
 }
@@ -113,7 +113,7 @@ BarChart.prototype.draw = function(data){
 
 	//Initial w and h
     var w = 900;
-    var h = 270;
+    var h = 350;
 
     //Append the svg object to the specified div in the body of the page
     var svg = d3.select("#bar_chart")

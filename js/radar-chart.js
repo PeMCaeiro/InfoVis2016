@@ -5,7 +5,7 @@ function RadarChart(){
    // Add object properties like this
    this.recent_attr = new Array();
    this.countries = new Array();
-   this.maxAttr = 5;
+   this.maxAttr = 4;
    this.maxCountries = 2;
    this.drawAttr = new Array();
    this.colors = ["red", "green", "darkviolet", "orange", "mediumblue", "sienna"]; // 6 colors right now, maybe add more ?
@@ -114,7 +114,7 @@ RadarChart.prototype.draw = function(data, countries){
 
     var cfg = {
          radius: 3.5,
-         w: 250,
+         w: 300,
          h: 250,
          factor: 1,
          factorLegend: .85,
@@ -151,7 +151,8 @@ RadarChart.prototype.draw = function(data, countries){
                 g.attr("transform", d3.event.transform)
             }))
             .append("g")
-            .attr("transform", "translate(" + cfg.TranslateX + "," + cfg.TranslateY + ")");
+            .attr("transform", "translate(" + cfg.TranslateX + "," + cfg.TranslateY + ")")
+            //.attr("transform", "translate( -940 , -84 ) scale(2.8)");;
 
     //Circular segments
     for(var j=0; j<cfg.levels-1; j++){

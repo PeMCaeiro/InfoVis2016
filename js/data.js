@@ -45,6 +45,8 @@ function removeMainDataObjSentinel(data_object){
         data_object["receipts"] = 0;
     }
 
+    //console.log(data_object);
+
     //console.log("After: ");
     //console.log(data_object);
 
@@ -161,31 +163,36 @@ $(document).ready(function() {
         var date_string = "";
         var parsed_date = "";
         var date = new Date();
-        for(var i=0;i<data.length;i++){
-            mainData[i] = new Object();
+        for(var i=0; i < data.length; i++){
+            j = mainData.length;
+            //console.log(mainData);
+            //console.log(mainData[j]);
+            //console.log(data[i]);
+            //console.log(mainData[j]);
+            mainData[j] = new Object();
 
-            mainData[i]["arrivals"] = data[i]["arrivalsWW"];
-            mainData[i]["country"] = data[i]["country"];
-            mainData[i]["departures"] = data[i]["departuresWW"];
-            mainData[i]["directToGdp"] = data[i]["directContributionToGdpDollars"];
-            mainData[i]["numJobs"] = data[i]["employmentNumberJobs"];
-            mainData[i]["expenditures"] = data[i]["expendituresDollars"];
-            mainData[i]["gdp"] = data[i]["gdp"];
-            mainData[i]["netOccupancyRate"] = 0;
-            mainData[i]["percentToGdp"] = data[i]["percentageContributionGdp"];
-            mainData[i]["population"] = data[i]["population"];
-            mainData[i]["year"] = data[i]["year"];
-            mainData[i]["receipts"] = data[i]["receiptsDollars"];
+            mainData[j]["arrivals"] = data[i]["arrivalsWW"];
+            mainData[j]["country"] = data[i]["country"];
+            mainData[j]["departures"] = data[i]["departuresWW"];
+            mainData[j]["directToGdp"] = data[i]["directContributionToGdpDollars"];
+            mainData[j]["numJobs"] = data[i]["employmentNumberJobs"];
+            mainData[j]["expenditures"] = data[i]["expendituresDollars"];
+            mainData[j]["gdp"] = data[i]["gdp"];
+            mainData[j]["netOccupancyRate"] = 0;
+            mainData[j]["percentToGdp"] = data[i]["percentageContributionGdp"];
+            mainData[j]["population"] = data[i]["population"];
+            mainData[j]["year"] = data[i]["year"];
+            mainData[j]["receipts"] = data[i]["receiptsDollars"];
             
             date = new Date(data[i]["year"], 0 ,1);
             date_string = date.getFullYear(); // fullYear
             //console.log(date);
             parsed_date = parseTime(date_string);
             //console.log("PARSED: " + parsed_date);
-            mainData[i]["date"] = parsed_date;
+            mainData[j]["date"] = parsed_date;
             //console.log(date);
 
-            mainData[i] = removeMainDataObjSentinel(mainData[i]);
+            mainData[j] = removeMainDataObjSentinel(mainData[j]);
 
         }
         //console.log(euData);

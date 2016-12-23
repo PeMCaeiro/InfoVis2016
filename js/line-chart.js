@@ -132,7 +132,7 @@ LineChart.prototype.draw = function(data, countries){
 
 	//Initial w and h
     var w = 800;
-    var h = 300;
+    var h = 350;
 
     //Append the svg object to the specified div in the body of the page
     var svg = d3.select("#line_chart")

@@ -2,7 +2,7 @@
 
 //	Global Variables
 
-var maxGlobalAttr = 3;
+var maxGlobalAttr = 4;
 var selectedGlobalAttr = new Array();
 
 
@@ -91,9 +91,14 @@ $('#scatterplot').droppable( {
     drop: handleDropScatEvent
 } );
 
-//	Scatterplot
+//	Radar Chart
 $('#radar_chart').droppable( {
     drop: handleDropRadarEvent
+} );
+
+//	Choropleth
+$('#choropleth_map').droppable( {
+    drop: handleDropChoroEvent
 } );
 
 
@@ -142,4 +147,14 @@ function handleDropRadarEvent( event, ui ) {
 	radar_chart.addRecentAttr(draggable.attr('value'));
 
 	update_graphs(year_range);
+}
+
+//Choropleth Chart
+function handleDropChoroEvent( event, ui ) {
+	var draggable = ui.draggable;
+	console.log( 'The attr button with value "' + draggable.attr('value') + '" was dropped onto Choropleth!' );
+	choropleth.addRecentAttr(draggable.attr('value'));
+
+	update_graphs(year_range);
+
 }

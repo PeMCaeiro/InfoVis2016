@@ -2,6 +2,8 @@
 
 //  Global Variables
 
+var gMode = "free";
+
 var bar_chart = new BarChart();
 var line_chart = new LineChart();
 var heatmap = new Heatmap();
@@ -17,18 +19,32 @@ var choropleth = new Choropleth();
 
 function draw_map(){
 	var mainSelectionData = filterMainByCountries(mainData, allCountries);
-
-	mainSelectionData = filterByYearRange(mainSelectionData, first_year, first_year);
 	
-	console.log("Entered Maps");
-	console.log("Data to draw:");
-	console.log(mainSelectionData);
+	//console.log("Entered Maps");
+	//console.log("Data to draw:");
+	//console.log(mainSelectionData);
 
-	choropleth.computeDrawAttr(selectedGlobalAttr);
-	choropleth.draw(mainSelectionData, allCountries);
+	//d3.select(".d3-tip").remove();
+	d3.select(".d3-tip").remove();
+	if(gMode == "free"){
+		mainSelectionData = filterByYearRange(mainSelectionData, first_year, first_year);
+		choropleth.computeDrawAttr(selectedGlobalAttr);
+		choropleth.draw(mainSelectionData, allCountries);
+	}else if(gMode == "dest" || gMode == "origin"){
+		mainSelectionData = originsData;
+		//console.log("SO IT BEGINS");
+		//console.log(mainSelectionData);
+		mainSelectionData = filterByYearRange(mainSelectionData, first_year, first_year);
+		//console.log(mainSelectionData);
+		//console.log(mainSelectionData);
+		choropleth.computeNumberTrips();
+		choropleth.draw2(mainSelectionData, allCountries, gKeyCountry, gMode);
+	}
 }
 
 function draw_year_graphs(){
+
+	maxGlobalAttr = 4;
 
 	// Invoke methods like this
 	//bar_chart.setAttribute("numJobs");
@@ -39,8 +55,8 @@ function draw_year_graphs(){
 	mainSelectionData = filterByYearRange(mainSelectionData, first_year, second_year);
 	
 	console.log("Entered draw_year_graphs");
-	console.log("Data to draw:");
-	console.log(mainSelectionData);
+	//console.log("Data to draw:");
+	//console.log(mainSelectionData);
 
 	d3.select(".d3-tip").remove();
 
@@ -53,6 +69,12 @@ function draw_year_graphs(){
 
 function draw_range_graphs(){
 
+	maxGlobalAttr = 4;
+	//if(selectedGlobalAttr.length == 3){
+	//	var a = selectedGlobalAttr[2];
+	//	selectedGlobalAttr.length = 2;
+	//}
+
 	// Invoke methods like this
 	//bar_chart.setAttribute("numJobs");
 	//console.log(bar_chart.getAttribute());
@@ -64,8 +86,8 @@ function draw_range_graphs(){
 	mainSelectionData = filterByYearRange(mainSelectionData, first_year, second_year); //first and second_year are global vars from timeline.js
 	
 	console.log("Entered draw_range_graphs");
-	console.log("Data to draw:");
-	console.log(mainSelectionData);
+	//console.log("Data to draw:");
+	//console.log(mainSelectionData);
 
 	d3.select(".d3-tip").remove();
 
